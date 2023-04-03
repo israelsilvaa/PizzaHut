@@ -1,8 +1,15 @@
 import random
+from modulos.tela import *
+
+# os.system('clear')
+tela = Tela()
+tela.limpar()
+
+for i in range(1, 4*4, 4):
+    print(i)
 
 #v = int(input('Qual a quantidade de vertices?:'))
-v = 2
-
+v = 4
 matriz = []
 for i in range(1, v+1):
     linha = ["x"]
@@ -38,13 +45,15 @@ for i in range(1, v+1):
 for linha in range(1, v+1):
     for coluna in range(1, v+1):
         if (coluna == 1):
-            print(linha, end="_")
+            print(linha, end="_ ")
         print(teste[linha-1][coluna], ' ', end='')
     print('')
     
 for linha in range(1, v+1):
-    print("---",linha, end="---")    
+    print("------",linha, end="")    
 print('\nAresta(Peso, Tempo)')
+
+
 '''
 for linha in range(1, v+1):
     for coluna in range(1, v+1):
