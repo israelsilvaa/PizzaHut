@@ -4,10 +4,10 @@ from modulos.tela import Tela
 tela = Tela()
 tela.limparTela()
 
-tamanhoGrid = int(input('Qual o tamanho do grid?(NxN):'))
+#tamanhoGrid = int(input('Qual o tamanho do grid?(NxN):'))
+tamanhoGrid = 3
 
 peperoni = Pizza(tamanhoGrid)
-#v = 2
 
 
 peperoni.criarGrid()

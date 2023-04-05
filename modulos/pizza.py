@@ -5,10 +5,10 @@ class Pizza:
     grid = []
     arestas = []
     tamanhoGrid = None
-
+    
     def __init__(self, tamanhoDoGrid):
         self.tamanhoGrid = tamanhoDoGrid
-
+        
     def criarGrid(self):
         global grid
         global arestas
@@ -21,7 +21,8 @@ class Pizza:
                 linha.append(numero)
                 numero = numero + 1
                 # linha.append(".")
-                self.grid.append(linha)
+            self.grid.append(linha)
+            
 
     def criarArestas(self):
         global grid
@@ -47,12 +48,11 @@ class Pizza:
         
         for linha in range(1, self.tamanhoGrid+1):
             for coluna in range(1, self.tamanhoGrid+1):
-                if coluna == 1:
-                    print(end="- ")
                 if linha == 3 and coluna == 5:
                     self.grid[linha][coluna] = '0'
                 print(self.grid[linha-1][coluna], ' ', end='')
             print(' \n')
+
         print("\n")
     
     def listaArestas(self):
@@ -60,16 +60,23 @@ class Pizza:
         global arestas
         global tamanhoGrid
     
+        print('\n                Aresta(Peso, Tempo)')
+        for linha in range(1, self.tamanhoGrid+1):
+            print("---",linha, end="---")    
+        print("")
+
         for linha in range(1, self.tamanhoGrid+1):
             for coluna in range(1, self.tamanhoGrid+1):
                 if (coluna == 1):
                     print(linha, end="_")
                 print(self.arestas[linha-1][coluna], ' ', end='')
             print('')
+        print("\nCoordenada da aresta (Linha, coluna)\n")
+        print("Exemplo: uma aresta ligando o Vertice 8 ao 9")
+        print("teriamos um PESO e um TEMPO gravados nas coordenadas: Linha 8 e Coluna 9\n")
+        print("Ou seja: (8,9)\n")
+        print("\n")
         
-        for linha in range(1, self.tamanhoGrid+1):
-            print("---",linha, end="---")    
-        print('\nAresta(Peso, Tempo)')
         print("\n")
 
    
