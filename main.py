@@ -1,17 +1,19 @@
 from modulos.pizza import Pizza
 from modulos.tela import Tela
 
-tela = Tela()
-tela.limparTela()
+if __name__ == "__main__":
 
-#tamanhoGrid = int(input('Qual o tamanho do grid?(NxN):'))
-tamanhoGrid = 3
+    tela = Tela()
+    tela.limparTela()
 
-peperoni = Pizza(tamanhoGrid)
+    # tamanhoGrid = int(input('Qual o tamanho do grid?(NxN):'))
+    tamanhoGrid = 3
 
+    peperoni = Pizza(tamanhoGrid)
 
-peperoni.criarGrid()
-peperoni.gridAtual()
+    peperoni.gerarGrid()
+    # peperoni.adicionarAresta(3, 4, 4, 5)
 
-peperoni.criarArestas()
-peperoni.listaArestas()
+    peperoni.gerarArestasGrid()
+    peperoni.gridAtual()
+    peperoni.getMatrizAdjacencias()
