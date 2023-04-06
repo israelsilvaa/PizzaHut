@@ -25,22 +25,8 @@ class Pizza:
         self.arestas[linha - 1][coluna - 1] = [distancia, tempo]
         self.arestas[coluna - 1][linha - 1] = [distancia, tempo]
 
-    def criarArestas(self):
 
-        self.tamanhoGrid = self.tamanhoGrid * self.tamanhoGrid
-
-        for i in range(1, self.tamanhoGrid+1):
-            # indice 0 é adicionado, mas não vamos usar
-            linha = [['', '']]
-            for x in range(1, self.tamanhoGrid+1):
-                pesoTempo = [0, 0]
-                if i != x and i != 1 and i + 1 >= x and i+x != 10:
-                    pesoTempo[0] = random.randint(1, 4)
-                    pesoTempo[1] = random.randint(5, 9)
-                linha.append(pesoTempo)
-            self.arestas.append(linha)
-
-    def gridAtual(self):
+    def mostrarGrid(self):
 
         print("Grid: ")
         for linha in range(0, self.tamanhoGrid):
@@ -78,23 +64,4 @@ class Pizza:
                 print(f"{self.arestas[linha][coluna]}  ", end="")
             print()
 
-    def listaArestas(self):
 
-        print('\n                Aresta(Peso, Tempo)')
-        for linha in range(1, self.numeroVertices + 1):
-            print("---", linha, end="---")
-        print("")
-
-        for linha in range(1, self.numeroVertices + 1):
-            for coluna in range(1, self.numeroVertices + 1):
-                if (coluna == 1):
-                    print(linha, end="_")
-                print(self.arestas[linha - 1][coluna], ' ', end='')
-            print('')
-        print("\nCoordenada da aresta (Linha, coluna)\n")
-        print("Exemplo: uma aresta ligando o Vertice 8 ao 9")
-        print("teriamos um PESO e um TEMPO gravados nas coordenadas: Linha 8 e Coluna 9\n")
-        print("Ou seja: (8,9)\n")
-        print("\n")
-
-        print("\n")
