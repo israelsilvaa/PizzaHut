@@ -21,9 +21,9 @@ class Pizza:
 
             self.grid.append(valoresLinha)
 
-    def adicionarAresta(self, linha, coluna, distancia, tempo):
-        self.arestas[linha - 1][coluna - 1] = [distancia, tempo]
-        self.arestas[coluna - 1][linha - 1] = [distancia, tempo]
+    def adicionarAresta(self, vertice1, vertice2, distancia, tempo):
+        self.arestas[vertice1 - 1][vertice2 - 1] = [distancia, tempo]
+        self.arestas[vertice2 - 1][vertice1 - 1] = [distancia, tempo]
 
 
     def mostrarGrid(self):
