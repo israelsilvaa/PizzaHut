@@ -6,8 +6,7 @@ if __name__ == "__main__":
     tela = Tela()
     tela.limparTela()
     # tamanhoGrid = int(input('Qual o tamanho do grid?(NxN):'))
-    tamanhoGrid = 8
-
+    tamanhoGrid = 6
 
     peperoni = Pizza(tamanhoGrid)
 
@@ -15,5 +14,6 @@ if __name__ == "__main__":
     # peperoni.adicionarAresta(3, 4, 4, 5)
 
     peperoni.gerarArestasGrid()
+    
     peperoni.mostrarGrid()
     #peperoni.getMatrizAdjacencias()
