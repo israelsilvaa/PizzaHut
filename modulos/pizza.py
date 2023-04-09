@@ -8,13 +8,21 @@ class Pizza:
         self.arestas = [[[0, 0, 0] for i in range(self.numeroVertices)]
                         for j in range(self.numeroVertices)]
         self.tamanhoGrid = tamanhoDoGrid
+        self.tipoAresta = 3
+        if self.tipoAresta == 3:
+            self.ajusteEspaco = "              "
+            self.ajusteEspacoHorizontal = "  "
+            self.ajusteEspacoHorizontal2 = "              "
+            self.ajusteEspacoHorizontal3 = "                "
+        else:
+            self.ajusteEspaco = "                    "
+            self.ajusteEspacoHorizontal = "     "
+            self.ajusteEspacoHorizontal2 = "                    "
 
         self.pizza = "\U0001F355"
         self.enderecoPizzaria = "\U0001F3ED"
         self.enderecoCliente = "\U0001F9D1"
         self.entregue = "\U00002705"
-        self.ajusteEspaco = "                "
-        self.ajusteEspacoHorizontal = "   "
         self.inicioCor = "\033[0;31;40m "
         self.fimCor = "\033[m"
 
@@ -146,22 +154,49 @@ class Pizza:
     def printarArestaVerticais(self, linha, coluna):
         if self.grid[linha][coluna][0] + self.tamanhoGrid <= self.numeroVertices:
                 for i in range(self.tamanhoGrid):
-                    print("|" , self.ajusteEspaco, end="")
+                    if self.tipoAresta == 3:
+                        print("|" , self.ajusteEspacoHorizontal3, end="")
+                    else:
+                        print("|" , self.ajusteEspacoHorizontal2, end="")
                 print("\n")
                 for coluna in range(self.tamanhoGrid):
                     L_aresta = self.grid[linha][coluna][0]
                     C_aresta = self.grid[linha][coluna][0] + self.tamanhoGrid
-                    print(self.arestas[L_aresta-1][C_aresta-1][0],self.ajusteEspaco, end="")
+                    if self.tipoAresta == 0:
+                        print(self.arestas[L_aresta-1][C_aresta-1][self.tipoAresta], self.ajusteEspaco, end="")
+                    elif self.tipoAresta == 1:
+                        print(self.arestas[L_aresta-1][C_aresta-1][self.tipoAresta], self.ajusteEspaco, end="")
+                    elif self.tipoAresta == 2:
+                        print(self.arestas[L_aresta-1][C_aresta-1][self.tipoAresta], self.ajusteEspaco, end="")
+                    else:
+                        print(str(self.arestas[L_aresta-1][C_aresta-1][self.tipoAresta-3])+","+ str(self.arestas[L_aresta-1][C_aresta-1][self.tipoAresta-2]), self.ajusteEspacoHorizontal2, end="")
                 print("\n")
                 for i in range(self.tamanhoGrid):
-                    print("|" , self.ajusteEspaco, end="")
+                    if self.tipoAresta == 3:
+                        print("|" , self.ajusteEspacoHorizontal3, end="")
+                    else:
+                        print("|" , self.ajusteEspacoHorizontal2, end="")
                 print("\n")
 
+    """
+        0 == distancia
+        1 == tempo
+        2 == tempo/distancia
+        3 == distantia E tempo    
+    """
     def printarArestaHorizontal(self, linha, coluna):
         if coluna+1 <= self.tamanhoGrid - 1:
             L_aresta = self.grid[linha][coluna][0]
             C_aresta = self.grid[linha][coluna+1][0]
-            print("--", self.arestas[L_aresta-1][C_aresta-1][0],"--", self.ajusteEspacoHorizontal, end="")
+            
+            if self.tipoAresta == 0:
+                print("--", self.arestas[L_aresta-1][C_aresta-1][self.tipoAresta],"--", self.ajusteEspacoHorizontal, end="")
+            elif self.tipoAresta == 1:
+                print("--", self.arestas[L_aresta-1][C_aresta-1][self.tipoAresta],"--", self.ajusteEspacoHorizontal, end="")
+            elif self.tipoAresta == 2:
+                print("--", self.arestas[L_aresta-1][C_aresta-1][self.tipoAresta],"--", self.ajusteEspacoHorizontal, end="")
+            else:
+                print("--", str(self.arestas[L_aresta-1][C_aresta-1][self.tipoAresta-3])+","+str(self.arestas[L_aresta-1][C_aresta-1][self.tipoAresta-2]),"--", self.ajusteEspacoHorizontal, end="")
 
 
 
