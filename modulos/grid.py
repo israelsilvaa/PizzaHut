@@ -10,15 +10,7 @@ class Grid:
         self.grafo = grafo
         self.tamanhoGrid: int = tamanhoGrid
         self.tipoAresta = 3
-        if self.tipoAresta == 3:
-            self.ajusteEspaco = "              "
-            self.ajusteEspacoHorizontal = "  "
-            self.ajusteEspacoHorizontal2 = "              "
-            self.ajusteEspacoHorizontal3 = "                "
-        else:
-            self.ajusteEspaco = "                    "
-            self.ajusteEspacoHorizontal = "     "
-            self.ajusteEspacoHorizontal2 = "                    "
+        self.quantEntregas = 2
 
     def gerarGrid(self):
         enderecoPizzaHut = random.randint(1, self.grafo.numeroVertices - 1)
@@ -26,7 +18,7 @@ class Grid:
         # gerando pedidos aleatorios( != da pizzaria)
         listaDePedidos = []
         endereco = random.randint(1, self.grafo.numeroVertices - 1)
-        for i in range(3):
+        for i in range(self.quantEntregas):
             while True:
                 endereco = random.randint(1, self.grafo.numeroVertices - 1)
                 if endereco in listaDePedidos or endereco == enderecoPizzaHut:
@@ -68,6 +60,11 @@ class Grid:
         4 == check -> V (entrega feita)
         5 == pizzaria e entregador
         """
+        if self.tipoAresta == 3:
+            ajusteEspacoHorizontal = "  "
+        else:
+            ajusteEspacoHorizontal = "     "
+
         print("Grid: ")
         for linha in range(0, self.tamanhoGrid):
             for coluna in range(0, self.tamanhoGrid):
@@ -75,44 +72,42 @@ class Grid:
                 if 0 == self.grid[linha][coluna][1]:
                     if self.grafo.numeroVertices > 99 and self.grid[linha][coluna][0] < 10:
                         print(
-                            "00" + f"{self.grid[linha][coluna][0]} ", self.ajusteEspacoHorizontal, end="")
+                            "00" + f"{self.grid[linha][coluna][0]} ", ajusteEspacoHorizontal, end="")
                         self._printarArestaHorizontal(linha, coluna)
                     elif self.grafo.numeroVertices > 9 and self.grid[linha][coluna][0] < 10:
                         print(
                             Icone.INICIO.value + "0" +
                             f"{self.grid[linha][coluna][0]}" + Icone.FIM.value,
-                            self.ajusteEspacoHorizontal, end="")
-                        # print("X", self.ajusteEspacoHorizontal, end="")
+                            ajusteEspacoHorizontal, end="")
+                        
                         self._printarArestaHorizontal(linha, coluna)
                     elif self.grafo.numeroVertices > 99 and self.grid[linha][coluna][0] < 100:
                         print("0" + f"{self.grid[linha][coluna][0]} ",
-                              self.ajusteEspacoHorizontal, end="")
-                        # print("X", self.ajusteEspacoHorizontal, end="")
+                            ajusteEspacoHorizontal, end="")
                         self._printarArestaHorizontal(linha, coluna)
                     else:
                         print(Icone.INICIO.value + f"{self.grid[linha][coluna][0]}" +
-                              Icone.FIM.value, self.ajusteEspacoHorizontal, end="")
-                        # print(self.inicioCor+"X"+self.fimCor, self.ajusteEspacoHorizontal, end="")
+                              Icone.FIM.value, ajusteEspacoHorizontal, end="")
                         self._printarArestaHorizontal(linha, coluna)
 
                 elif 1 == self.grid[linha][coluna][1]:
                     print(Icone.PIZZARIA.value,
-                          self.ajusteEspacoHorizontal, end="")
+                    ajusteEspacoHorizontal, end="")
                     self._printarArestaHorizontal(linha, coluna)
                 elif 2 == self.grid[linha][coluna][1]:
-                    print(Icone.PIZZA.value, self.ajusteEspacoHorizontal, end="")
+                    print(Icone.PIZZA.value, ajusteEspacoHorizontal, end="")
                     self._printarArestaHorizontal(linha, coluna)
                 elif 3 == self.grid[linha][coluna][1]:
                     print(Icone.RESIDENCIA.value,
-                          self.ajusteEspacoHorizontal, end="")
+                          ajusteEspacoHorizontal, end="")
                     self._printarArestaHorizontal(linha, coluna)
                 elif 4 == self.grid[linha][coluna][1]:
                     print(Icone.ENTREGUE.value,
-                          self.ajusteEspacoHorizontal, end="")
+                          ajusteEspacoHorizontal, end="")
                     self._printarArestaHorizontal(linha, coluna)
                 elif 5 == self.grid[linha][coluna][1]:
                     print(Icone.PIZZARIA.value, Icone.PIZZA.value,
-                          self.ajusteEspacoHorizontal, end="")
+                          ajusteEspacoHorizontal, end="")
                     self._printarArestaHorizontal(linha, coluna)
 
             print("\n")
@@ -135,52 +130,65 @@ class Grid:
                                        random.randint(1, 4), random.randint(5, 9))
 
     def _printarArestaVerticais(self, linha, coluna):
+        if self.tipoAresta == 3:
+            ajusteEspaco = "              "
+            ajusteEspacoHorizontal2 = "              "
+            ajusteEspacoHorizontal3 = "                "
+        else:
+            ajusteEspaco = "                    "
+            ajusteEspacoHorizontal2 = "                    "
+
         if self.grid[linha][coluna][0] + self.tamanhoGrid <= self.grafo.numeroVertices:
             for i in range(self.tamanhoGrid):
                 if self.tipoAresta == 3:
-                    print("|", self.ajusteEspacoHorizontal3, end="")
+                    print("|", ajusteEspacoHorizontal3, end="")
                 else:
-                    print("|", self.ajusteEspacoHorizontal2, end="")
+                    print("|", ajusteEspacoHorizontal2, end="")
             print("\n")
             for coluna in range(self.tamanhoGrid):
                 L_aresta = self.grid[linha][coluna][0]
                 C_aresta = self.grid[linha][coluna][0] + self.tamanhoGrid
                 if self.tipoAresta == 0:
                     print(self.grafo.arestas[L_aresta - 1][C_aresta - 1]
-                          [self.tipoAresta], self.ajusteEspaco, end="")
+                          [self.tipoAresta], ajusteEspaco, end="")
                 elif self.tipoAresta == 1:
                     print(self.grafo.arestas[L_aresta - 1][C_aresta - 1]
-                          [self.tipoAresta], self.ajusteEspaco, end="")
+                          [self.tipoAresta], ajusteEspaco, end="")
                 elif self.tipoAresta == 2:
                     print(self.grafo.arestas[L_aresta - 1][C_aresta - 1]
-                          [self.tipoAresta], self.ajusteEspaco, end="")
+                          [self.tipoAresta], ajusteEspaco, end="")
                 else:
                     print(str(self.grafo.arestas[L_aresta - 1][C_aresta - 1][self.tipoAresta - 3]) + "," + str(
-                        self.grafo.arestas[L_aresta - 1][C_aresta - 1][self.tipoAresta - 2]), self.ajusteEspacoHorizontal2,
+                        self.grafo.arestas[L_aresta - 1][C_aresta - 1][self.tipoAresta - 2]), ajusteEspacoHorizontal2,
                         end="")
             print("\n")
             for i in range(self.tamanhoGrid):
                 if self.tipoAresta == 3:
-                    print("|", self.ajusteEspacoHorizontal3, end="")
+                    print("|", ajusteEspacoHorizontal3, end="")
                 else:
-                    print("|", self.ajusteEspacoHorizontal2, end="")
+                    print("|", ajusteEspacoHorizontal2, end="")
             print("\n")
 
     def _printarArestaHorizontal(self, linha, coluna):
+        if self.tipoAresta == 3:
+            ajusteEspacoHorizontal = "  "
+        else:
+            ajusteEspacoHorizontal = "     "
+
         if coluna + 1 <= self.tamanhoGrid - 1:
             L_aresta = self.grid[linha][coluna][0]
             C_aresta = self.grid[linha][coluna + 1][0]
 
             if self.tipoAresta == 0:
                 print("--", self.grafo.arestas[L_aresta - 1][C_aresta - 1]
-                      [self.tipoAresta], "--", self.ajusteEspacoHorizontal, end="")
+                        [self.tipoAresta], "--", ajusteEspacoHorizontal, end="")
             elif self.tipoAresta == 1:
                 print("--", self.grafo.arestas[L_aresta - 1][C_aresta - 1]
-                      [self.tipoAresta], "--", self.ajusteEspacoHorizontal, end="")
+                        [self.tipoAresta], "--", ajusteEspacoHorizontal, end="")
             elif self.tipoAresta == 2:
                 print("--", self.grafo.arestas[L_aresta - 1][C_aresta - 1]
-                      [self.tipoAresta], "--", self.ajusteEspacoHorizontal, end="")
+                        [self.tipoAresta], "--", ajusteEspacoHorizontal, end="")
             else:
                 print("--", str(self.grafo.arestas[L_aresta - 1][C_aresta - 1][self.tipoAresta - 3]) + "," + str(
-                    self.grafo.arestas[L_aresta - 1][C_aresta - 1][self.tipoAresta - 2]), "--", self.ajusteEspacoHorizontal,
+                    self.grafo.arestas[L_aresta - 1][C_aresta - 1][self.tipoAresta - 2]), "--", ajusteEspacoHorizontal,
                     end="")
