@@ -9,6 +9,7 @@ if __name__ == "__main__":
     tela.limparTela()
 
     tamanhoGrid = 3
+    
 
     grafo = Grafo(tamanhoGrid)
 
@@ -17,11 +18,11 @@ if __name__ == "__main__":
     grid.gerarGrid()
     grid.gerarArestasGrid()
 
-    julinDaCg160 = Entregador()
+    
+    julinDaCg160 = Entregador(grafo)
 
     grid.mostrarGrid()
 
-    julinDaCg160.melhorCaminho(grafo)
+    julinDaCg160.melhorCaminho()
 
-    grafo.getMatrizAdjacencias()
-
+    # grafo.getMatrizAdjacencias()

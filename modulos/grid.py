@@ -10,7 +10,7 @@ class Grid:
         self.grafo = grafo
         self.tamanhoGrid: int = tamanhoGrid
         self.tipoAresta = 3
-        self.quantEntregas = 2
+        self.quantEntregas = 1
 
     def gerarGrid(self):
         enderecoPizzaHut = random.randint(1, self.grafo.numeroVertices - 1)
@@ -61,7 +61,7 @@ class Grid:
         5 == pizzaria e entregador
         """
         if self.tipoAresta == 3:
-            ajusteEspacoHorizontal = "  "
+            ajusteEspacoHorizontal = "   "
         else:
             ajusteEspacoHorizontal = "     "
 
