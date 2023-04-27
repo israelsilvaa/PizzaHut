@@ -9,35 +9,37 @@ class Grid:
         self.grid = []
         self.grafo = grafo
         self.tamanhoGrid: int = tamanhoGrid
+        self.enderecoPizzaHut = None
         self.tipoAresta = 3
         self.quantEntregas = 1
+        self.listaDePedidos = []
 
     def gerarGrid(self):
-        enderecoPizzaHut = random.randint(1, self.grafo.numeroVertices - 1)
+        self.enderecoPizzaHut = random.randint(1, self.grafo.numeroVertices - 1)
 
         # gerando pedidos aleatorios( != da pizzaria)
-        listaDePedidos = []
+
         endereco = random.randint(1, self.grafo.numeroVertices - 1)
         for i in range(self.quantEntregas):
             while True:
                 endereco = random.randint(1, self.grafo.numeroVertices - 1)
-                if endereco in listaDePedidos or endereco == enderecoPizzaHut:
+                if endereco in self.listaDePedidos or endereco == self.enderecoPizzaHut:
                     endereco = random.randint(1, self.grafo.numeroVertices - 1)
                 else:
-                    listaDePedidos.append(endereco)
+                    self.listaDePedidos.append(endereco)
                     break
 
         print('\033[0;30;41mQuant Vertices\033[m', self.grafo.numeroVertices)
-        print("EPIZZAHUT : ", enderecoPizzaHut)
-        print("entregador : ", enderecoPizzaHut)
-        print("cliente : ", listaDePedidos)
+        print("EPIZZAHUT : ", self.enderecoPizzaHut)
+        print("entregador : ", self.enderecoPizzaHut)
+        print("cliente : ", self.listaDePedidos)
 
         # Criando matriz do GRID e setando endereços de clientes
         c = 1
         for linha in range(0, self.tamanhoGrid):
             valoresLinha = []
             for coluna in range(0, self.tamanhoGrid):
-                if c in listaDePedidos:
+                if c in self.listaDePedidos:
                     vertice_icone = [c, 3]  # mudar pra 3
                 else:
                     vertice_icone = [c, 0]
@@ -48,7 +50,7 @@ class Grid:
         # setando endereço PIZZA HUT
         for linha in range(self.tamanhoGrid):
             for coluna in range(self.tamanhoGrid):
-                if self.grid[linha][coluna][0] == enderecoPizzaHut:
+                if self.grid[linha][coluna][0] == self.enderecoPizzaHut:
                     self.grid[linha][coluna][1] = 5
 
     def mostrarGrid(self):
@@ -86,7 +88,7 @@ class Grid:
                             ajusteEspacoHorizontal, end="")
                         self._printarArestaHorizontal(linha, coluna)
                     else:
-                        print(Icone.INICIO.value + f"{self.grid[linha][coluna][0]}" +
+                        print(Icone.INICIO.value + f"{self.grid[linha][coluna][0]-1}"+
                               Icone.FIM.value, ajusteEspacoHorizontal, end="")
                         self._printarArestaHorizontal(linha, coluna)
 

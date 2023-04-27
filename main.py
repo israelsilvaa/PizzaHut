@@ -19,10 +19,10 @@ if __name__ == "__main__":
     grid.gerarArestasGrid()
 
     
-    julinDaCg160 = Entregador(grafo)
+    julinDaCg160 = Entregador(grafo, grid)
 
     grid.mostrarGrid()
 
     julinDaCg160.melhorCaminho()
 
-    # grafo.getMatrizAdjacencias()
+    grafo.getMatrizAdjacencias()

@@ -7,10 +7,8 @@ class Grafo:
                         for j in range(self.numeroVertices)]
 
     def adicionarAresta(self, vertice1, vertice2, distancia, tempo):
-        self.arestas[vertice1 - 1][vertice2 -
-                                   1] = [distancia, tempo, round(tempo / distancia)]
-        self.arestas[vertice2 - 1][vertice1 -
-                                   1] = [distancia, tempo, round(tempo / distancia)]
+        self.arestas[vertice1 - 1][vertice2 -1] = [distancia, tempo, round(tempo / distancia)]
+        self.arestas[vertice2 - 1][vertice1 -1] = [distancia, tempo, round(tempo / distancia)]
 
     def getMatrizAdjacencias(self):
         print('\n                Aresta(Peso, Tempo)')
