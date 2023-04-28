@@ -19,14 +19,16 @@ class Entregador:
 
         proximo = self.grid.listaDePedidos[0] - 1
         self.melhorCaminhoDFS.append(proximo)
-
+        ct = 0
         while self.custo_pi_finali[proximo][1] != "null":
             self.melhorCaminhoDFS.append(self.custo_pi_finali[proximo][1])
+            ct = ct + self.custo_pi_finali[proximo][0]
             proximo = self.custo_pi_finali[proximo][1]
 
         print("\nmelhor caminho de ", self.grid.enderecoPizzaHut - 1, " -> ", self.grid.listaDePedidos[0] - 1)
         self.melhorCaminhoDFS.reverse()
         print(self.melhorCaminhoDFS)
+        print("CUSTO TOTAL: ",ct)
       
 
     def criaTabelaDFS(self):
