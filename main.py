@@ -8,8 +8,7 @@ if __name__ == "__main__":
     tela = Tela()
     tela.limparTela()
 
-    tamanhoGrid = 7
-    
+    tamanhoGrid = 5
 
     grafo = Grafo(tamanhoGrid)
 
@@ -27,5 +26,6 @@ if __name__ == "__main__":
 
     julinDaCg160.printTabelaDFS()
 
+    print(grafo.arestas[0][8])
 
     # grafo.getMatrizAdjacencias()

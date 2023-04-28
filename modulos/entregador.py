@@ -17,7 +17,7 @@ class Entregador:
         self.criaTabelaDFS()
         self.dfs()
 
-        proximo = self.grid.listaDePedidos[0] - 1
+        proximo = self.grid.listaDePedidos[0]
         self.melhorCaminhoDFS.append(proximo)
         ct = 0
         while self.custo_pi_finali[proximo][1] != "null":
@@ -25,7 +25,7 @@ class Entregador:
             ct = ct + self.custo_pi_finali[proximo][0]
             proximo = self.custo_pi_finali[proximo][1]
 
-        print("\nmelhor caminho de ", self.grid.enderecoPizzaHut - 1, " -> ", self.grid.listaDePedidos[0] - 1)
+        print("\nmelhor caminho de ", self.grid.enderecoPizzaHut, " -> ", self.grid.listaDePedidos[0] )
         self.melhorCaminhoDFS.reverse()
         print(self.melhorCaminhoDFS)
         print("CUSTO TOTAL: ",ct)
@@ -49,10 +49,9 @@ class Entregador:
 
     def dfs(self):        
 
-        vertReferencia = self.grid.enderecoPizzaHut-1
+        vertReferencia = self.grid.enderecoPizzaHut
         for i in range(self.grafo.numeroVertices):
             if i > 0:
-                # self.printTabelaDFS()
                 vertReferencia = self.buscarMenor(self.custo_pi_finali)
 
             for destino in range(self.grafo.numeroVertices):    
@@ -68,8 +67,6 @@ class Entregador:
                             self.custo_pi_finali[destino][0] = self.grafo.arestas[vertReferencia][destino][0] + self.custo_pi_finali[vertReferencia][0]
                             self.custo_pi_finali[destino][1] = vertReferencia
             self.custo_pi_finali[vertReferencia][2] = 1 # finaliza a referencia
-                            
-            # self.printTabelaDFS()
             
     def buscarMenor(self, lista):
         # csuto e seu indice
