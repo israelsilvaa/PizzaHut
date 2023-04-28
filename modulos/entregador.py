@@ -6,73 +6,87 @@ class Entregador:
         self.teste = "testando"
         self.grafo = grafo
         self.grid = grid
-        self.custo_pi = []
+        self.custo_pi_finali = []
         self.melhorCaminhoDFS = []
         self.parametro = 0
 
         #pegar o endereço da pizzaria para inciar o DFS
         self.vertice_inicial_entrega = 0
-
     
     def melhorCaminho(self):
         self.criaTabelaDFS()
-        self.printTabelaDFS()
         self.dfs()
 
-        print("\nmelhor caminho de ", self.grid.enderecoPizzaHut, " -> ", self.grid.listaDePedidos[0])
-        
-        print(self.melhorCaminhoDFS)
+        proximo = self.grid.listaDePedidos[0] - 1
+        self.melhorCaminhoDFS.append(proximo)
 
-        self.printTabelaDFS()
+        while self.custo_pi_finali[proximo][1] != "null":
+            self.melhorCaminhoDFS.append(self.custo_pi_finali[proximo][1])
+            proximo = self.custo_pi_finali[proximo][1]
+
+        print("\nmelhor caminho de ", self.grid.enderecoPizzaHut - 1, " -> ", self.grid.listaDePedidos[0] - 1)
+        self.melhorCaminhoDFS.reverse()
+        print(self.melhorCaminhoDFS)
+      
 
     def criaTabelaDFS(self):
         for i in range(self.grafo.numeroVertices):
             linha = []
             for x in range(2):
                 linha.append("null")
-            self.custo_pi.append(linha)
-        print("variavel teste: ", self.grafo.arestas[0][1][0])
+            linha.append(0)
+            self.custo_pi_finali.append(linha)
 
     def printTabelaDFS(self):
-        print("\nDFS-------- -  CUSTO  -  PI ")
+        print("\nDFS-------- -  CUSTO  -  PI  -  Finali. ")
         for i in range(self.grafo.numeroVertices):
             print("Vertice", i, ":    ", end="")
-            for x in range(2):
-                print(str(self.custo_pi[i][x]) , "    ", end="")
+            for x in range(3):
+                print(str(self.custo_pi_finali[i][x]) , "       ", end="")
             print("")
 
     def dfs(self):        
-        vertice_inicial = self.grid.enderecoPizzaHut
-        vertice_final = self.grafo.numeroVertices
 
-        self.dfs_visit(vertice_inicial, vertice_final)
+        vertReferencia = self.grid.enderecoPizzaHut-1
+        for i in range(self.grafo.numeroVertices):
+            if i > 0:
+                # self.printTabelaDFS()
+                vertReferencia = self.buscarMenor(self.custo_pi_finali)
 
-        if vertice_inicial > 0:
-            vertice_inicial = 0
-            vertice_final = self.grid.enderecoPizzaHut
-            self.dfs_visit(vertice_inicial, vertice_final)
+            for destino in range(self.grafo.numeroVertices):    
+                if i == 0 and destino == vertReferencia:
+                        self.custo_pi_finali[destino][0] = self.grafo.arestas[vertReferencia][destino][0]
+                elif self.grafo.arestas[vertReferencia][destino][0] > 0 and self.custo_pi_finali[destino][2] == 0:# aresta E nFinalizado
 
+                    if self.custo_pi_finali[destino][0] == "null":
+                        self.custo_pi_finali[destino][0] = self.grafo.arestas[vertReferencia][destino][0]
+                        self.custo_pi_finali[destino][1] = vertReferencia
+                    else:
+                        if self.grafo.arestas[vertReferencia][destino][0] + self.custo_pi_finali[vertReferencia][0] < self.custo_pi_finali[destino][0]:
+                            self.custo_pi_finali[destino][0] = self.grafo.arestas[vertReferencia][destino][0] + self.custo_pi_finali[vertReferencia][0]
+                            self.custo_pi_finali[destino][1] = vertReferencia
+            self.custo_pi_finali[vertReferencia][2] = 1 # finaliza a referencia
+                            
+            # self.printTabelaDFS()
+            
+    def buscarMenor(self, lista):
+        # csuto e seu indice
+        menor = [None ,None]
+        primeiroValorMenor = 0
 
-    def dfs_visit(self, vertice_inicial, vertice_final):
-        for saidaVerticeX_linha in range(vertice_inicial ,vertice_final):
-            for destinoVerticeX_coluna in range(vertice_final):
+        for i in range(len(lista)):
+            if lista[i][0] != "null" and lista[i][2] != 1 and primeiroValorMenor == 0:
+                menor[0] = lista[i][0]
+                menor[1] = i
+                primeiroValorMenor = 1
+        
+        for i in range(len(lista)):
+            if lista[i][0] != "null" and lista[i][2] != 1:
+                if lista[i][0] < menor[0]:
+                    menor[0] = lista[i][0]
+                    menor[1] = i
 
-                if saidaVerticeX_linha == self.grid.enderecoPizzaHut:
-                    self.custo_pi[vertice_inicial][0] = 0
-
-                # se a aresta existir(peso > 0)
-                elif self.grafo.arestas[saidaVerticeX_linha][destinoVerticeX_coluna][self.parametro] > 0:
-
-                    # se o custo for menor que o infinito
-                    custoDaAresta = self.grafo.arestas[saidaVerticeX_linha][destinoVerticeX_coluna][self.parametro] 
-                
-                    if self.custo_pi[destinoVerticeX_coluna][0] == "null":
-                        self.custo_pi[destinoVerticeX_coluna][0] = custoDaAresta
-                        self.custo_pi[destinoVerticeX_coluna][1] = saidaVerticeX_linha
-                    
-                    elif(custoDaAresta + self.custo_pi[destinoVerticeX_coluna][0] < self.custo_pi[destinoVerticeX_coluna][0]):
-                        self.custo_pi[destinoVerticeX_coluna][0] = custoDaAresta + self.custo_pi[destinoVerticeX_coluna][0]    
-                        self.custo_pi[destinoVerticeX_coluna][1] = saidaVerticeX_linha
+        return menor[1]
         
 
         

@@ -9,13 +9,13 @@ class Grid:
         self.grid = []
         self.grafo = grafo
         self.tamanhoGrid: int = tamanhoGrid
-        self.enderecoPizzaHut = None
+        random.seed(36)
+        self.enderecoPizzaHut = random.randint(1, self.grafo.numeroVertices - 1)
         self.tipoAresta = 3
         self.quantEntregas = 1
         self.listaDePedidos = []
 
     def gerarGrid(self):
-        self.enderecoPizzaHut = random.randint(1, self.grafo.numeroVertices - 1)
 
         # gerando pedidos aleatorios( != da pizzaria)
 
@@ -79,12 +79,12 @@ class Grid:
                     elif self.grafo.numeroVertices > 9 and self.grid[linha][coluna][0] < 10:
                         print(
                             Icone.INICIO.value + "0" +
-                            f"{self.grid[linha][coluna][0]}" + Icone.FIM.value,
+                            f"{self.grid[linha][coluna][0]-1}" + Icone.FIM.value,
                             ajusteEspacoHorizontal, end="")
                         
                         self._printarArestaHorizontal(linha, coluna)
                     elif self.grafo.numeroVertices > 99 and self.grid[linha][coluna][0] < 100:
-                        print("0" + f"{self.grid[linha][coluna][0]} ",
+                        print("0" + f"{self.grid[linha][coluna][0]-1} ",
                             ajusteEspacoHorizontal, end="")
                         self._printarArestaHorizontal(linha, coluna)
                     else:

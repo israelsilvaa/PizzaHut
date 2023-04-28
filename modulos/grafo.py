@@ -1,4 +1,4 @@
-
+from enums.icone import Icone
 class Grafo:
 
     def __init__(self, tamanhoDoGrid):
@@ -23,5 +23,8 @@ class Grafo:
                         print("0" + str(linha + 1), end="_")
                     else:
                         print(linha + 1, end="_")
-                print(f"{self.arestas[linha][coluna]}  ", end="")
+                if self.arestas[linha][coluna][0] == 0:
+                    print(f"{self.arestas[linha][coluna]}  ", end="")
+                else:
+                    print(Icone.INICIO.value +f"{self.arestas[linha][coluna]}  "+ Icone.FIM.value, end="")
             print()
