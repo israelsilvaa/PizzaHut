@@ -8,7 +8,7 @@ if __name__ == "__main__":
     tela = Tela()
     tela.limparTela()
 
-    tamanhoGrid = 3
+    tamanhoGrid = 4
 
     grafo = Grafo(tamanhoGrid)
 
@@ -22,7 +22,7 @@ if __name__ == "__main__":
 
     grid.mostrarGrid()
 
-    julinDaCg160.melhorCaminho()
+    julinDaCg160.iniciarEntregas()
 
 
     # grafo.getMatrizAdjacencias()
