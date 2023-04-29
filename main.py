@@ -8,7 +8,7 @@ if __name__ == "__main__":
     tela = Tela()
     tela.limparTela()
 
-    tamanhoGrid = 3
+    tamanhoGrid = 4
 
     grafo = Grafo(tamanhoGrid)
 

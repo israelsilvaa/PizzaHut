@@ -7,8 +7,9 @@ class Grid:
         self.grid = []
         self.grafo = grafo
         self.tamanhoGrid: int = tamanhoGrid
-        # random.seed(32)
+        random.seed(32)
         self.enderecoPizzaHut = random.randint(1, self.grafo.numeroVertices - 1)
+        self.entregador = self.enderecoPizzaHut
         self.tipoAresta = 3
         self.quantEntregas = 3
         self.listaDePedidos = []
@@ -51,14 +52,7 @@ class Grid:
                     self.grid[linha][coluna][1] = 5
 
     def mostrarGrid(self):
-        """
-        0 == imprimir vertice normalmente
-        1 ==  icone da pizzaria
-        2 ==  pizza
-        3 == endereço de entrega
-        4 == check -> V (entrega feita)
-        5 == pizzaria e entregador
-        """
+      
         if self.tipoAresta == 3:
             ajusteEspacoHorizontal = "   "
         else:
@@ -94,10 +88,10 @@ class Grid:
                     ajusteEspacoHorizontal, end="")
                     self._printarArestaHorizontal(linha, coluna)
                 elif 2 == self.grid[linha][coluna][1]:
-                    print(Icone.PIZZA.value, ajusteEspacoHorizontal, end="")
+                    print(Icone.ENTREGADOR.value, ajusteEspacoHorizontal, end="")
                     self._printarArestaHorizontal(linha, coluna)
                 elif 3 == self.grid[linha][coluna][1]:
-                    print(Icone.RESIDENCIA.value,
+                    print(Icone.CLIENTE.value,
                           ajusteEspacoHorizontal, end="")
                     self._printarArestaHorizontal(linha, coluna)
                 elif 4 == self.grid[linha][coluna][1]:
@@ -105,10 +99,18 @@ class Grid:
                           ajusteEspacoHorizontal, end="")
                     self._printarArestaHorizontal(linha, coluna)
                 elif 5 == self.grid[linha][coluna][1]:
-                    print(Icone.PIZZARIA.value, Icone.PIZZA.value,
+                    print(Icone.PIZZARIA.value, Icone.ENTREGADOR.value,
                           ajusteEspacoHorizontal, end="")
                     self._printarArestaHorizontal(linha, coluna)
-
+            
+                    """
+                    0 == imprimir vertice normalmente
+                    1 ==  icone da pizzaria
+                    2 ==  Entregador
+                    3 == cliente
+                    4 == check -> V (entrega feita)
+                    5 == pizzaria e entregador
+                    """
             print("\n")
             self._printarArestaVerticais(linha, coluna)
 
@@ -191,3 +193,5 @@ class Grid:
                 print("--", str(self.grafo.arestas[L_aresta][C_aresta][self.tipoAresta - 3]) + "," + str(
                     self.grafo.arestas[L_aresta][C_aresta][self.tipoAresta - 2]), "--", ajusteEspacoHorizontal,
                     end="")
+                
+    

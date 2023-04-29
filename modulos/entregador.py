@@ -1,4 +1,5 @@
 from modulos.grafo import Grafo
+from modulos.tela import Tela
 from enums.icone import Icone
 from modulos.grid import Grid
 class Entregador:
@@ -16,7 +17,6 @@ class Entregador:
 
         self.cloneListaDeEntregas()
         self.dfs(self.grid.enderecoPizzaHut)
-
         caminhoCusto = self.pegarMenorCaminhoDaTabela()
 
         print("lista de entregas : ",  self.listaEntrega_endStatus)
@@ -26,7 +26,20 @@ class Entregador:
                "->"+Icone.COR_VERMELHO.value + str(caminhoCusto[0])+Icone.FIM_COR.value+"->",
                  Icone.COR_VERDE.value + str(self.pegarEnderecoMaisPerto())+Icone.FIM_COR.value)
         print("CUSTO TOTAL: ",Icone.COR_AMARELO.value +str(caminhoCusto[1])+Icone.FIM_COR.value)
-        self.printTabelaDFS()
+ 
+        #self.moverEntregador(caminhoCusto[0])
+        
+    
+    def moverEntregador(self, caminho):
+        """
+        0 == imprimir vertice normalmente
+        1 ==  icone da pizzaria
+        2 ==  Entregador
+        3 == cliente
+        4 == check -> V (entrega feita)
+        5 == pizzaria e entregador
+        """
+        print("\ncaminho-----------", caminho)
 
     def cloneListaDeEntregas(self):
         for i in range(len(self.grid.listaDePedidos)):

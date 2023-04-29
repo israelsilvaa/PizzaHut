@@ -2,11 +2,12 @@ from enum import Enum
 
 
 class Icone(Enum):
-    PIZZA = "\U0001F6F5"
+    ENTREGADOR = "\U0001F6F5"
     PIZZARIA = "\U0001F3ED"
-    RESIDENCIA = "\U0001F9D1"
-    ENTREGUE = "\U00002705"
+    CLIENTE = "\U0001F9D1"
+    CHECK = "\U00002705"
     N_ENTREGUE = "\U0000274C"
+    
     COR_VERMELHO = "\033[31m" #VERMELHO
     COR_VERDE = "\033[32m" #VERDE
     COR_AMARELO = "\033[33m" #AMARELO
