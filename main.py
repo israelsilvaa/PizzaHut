@@ -1,17 +1,28 @@
-from modulos.pizza import Pizza
-
+from modulos.grafo import Grafo
+from modulos.grid import Grid
+from modulos.tela import Tela
+from modulos.entregador import Entregador
 
 if __name__ == "__main__":
 
+    tela = Tela()
+    tela.limparTela()
 
-    # tamanhoGrid = int(input('Qual o tamanho do grid?(NxN):'))
     tamanhoGrid = 3
 
-    peperoni = Pizza(tamanhoGrid)
+    grafo = Grafo(tamanhoGrid)
 
-    peperoni.gerarGrid()
-    # peperoni.adicionarAresta(3, 4, 4, 5)
+    grid = Grid(grafo, tamanhoGrid)
 
-    peperoni.gerarArestasGrid()
-    peperoni.mostrarGrid()
-    peperoni.getMatrizAdjacencias()
+    grid.gerarGrid()
+    grid.gerarArestasGrid()
+
+    
+    julinDaCg160 = Entregador(grafo, grid)
+
+    grid.mostrarGrid()
+
+    julinDaCg160.melhorCaminho()
+
+
+    # grafo.getMatrizAdjacencias()
