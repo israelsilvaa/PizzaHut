@@ -8,7 +8,7 @@ if __name__ == "__main__":
     tela = Tela()
     tela.limparTela()
 
-    tamanhoGrid = 5
+    tamanhoGrid = 3
 
     grafo = Grafo(tamanhoGrid)
 
@@ -19,12 +19,11 @@ if __name__ == "__main__":
 
     
     julinDaCg160 = Entregador(grafo, grid)
+    julinDaCg160.parametro = 0
 
     grid.mostrarGrid()
 
     julinDaCg160.melhorCaminho()
-
-    julinDaCg160.printTabelaDFS()
 
     print(grafo.arestas[0][8])
 

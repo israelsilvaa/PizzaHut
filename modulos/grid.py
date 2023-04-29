@@ -9,7 +9,7 @@ class Grid:
         self.grid = []
         self.grafo = grafo
         self.tamanhoGrid: int = tamanhoGrid
-        random.seed(30)
+        random.seed(36)
         self.enderecoPizzaHut = random.randint(1, self.grafo.numeroVertices - 1)
         self.tipoAresta = 3
         self.quantEntregas = 1
