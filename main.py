@@ -19,12 +19,10 @@ if __name__ == "__main__":
 
     
     julinDaCg160 = Entregador(grafo, grid)
-    julinDaCg160.parametro = 0
 
     grid.mostrarGrid()
 
     julinDaCg160.melhorCaminho()
 
-    print(grafo.arestas[0][8])
 
     # grafo.getMatrizAdjacencias()

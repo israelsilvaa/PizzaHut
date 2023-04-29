@@ -33,6 +33,7 @@ class Grid:
         print("EPIZZAHUT : ", self.enderecoPizzaHut)
         print("entregador : ", self.enderecoPizzaHut)
         print("cliente : ", self.listaDePedidos)
+        self.listaDePedidos[0] = 2 
 
         # Criando matriz do GRID e setando endereços de clientes
         c = 0

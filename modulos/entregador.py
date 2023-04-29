@@ -14,24 +14,61 @@ class Entregador:
         self.vertice_inicial_entrega = 0
     
     def melhorCaminho(self):
+
         self.criaTabelaDFS()
         self.dfs()
-
         proximo = self.grid.listaDePedidos[0]
         self.melhorCaminhoDFS.append(proximo)
         ct = self.custo_pi_finali[proximo][0]
         while self.custo_pi_finali[proximo][1] != "null":
             self.melhorCaminhoDFS.append(self.custo_pi_finali[proximo][1])
             proximo = self.custo_pi_finali[proximo][1]
-
-        print("\nmelhor caminho de ", self.grid.enderecoPizzaHut, " -> ", self.grid.listaDePedidos[0] )
+        print("DISTANCIA")
+        print("melhor caminho de ", self.grid.enderecoPizzaHut, " -> ", self.grid.listaDePedidos[0] )
         self.melhorCaminhoDFS.reverse()
         print(self.melhorCaminhoDFS)
         print("CUSTO TOTAL: ",ct)
-        self.printTabelaDFS()
+        
+        self.parametro = 1
+        self.melhorCaminhoDFS = []
+        ct = 0
+        self.criaTabelaDFS()
+        self.dfs()
+        proximo = self.grid.listaDePedidos[0]
+        self.melhorCaminhoDFS.append(proximo)
+        ct = self.custo_pi_finali[proximo][0]
+        while self.custo_pi_finali[proximo][1] != "null":
+            self.melhorCaminhoDFS.append(self.custo_pi_finali[proximo][1])
+            proximo = self.custo_pi_finali[proximo][1]
+        print("\nTEMPO")
+        print("melhor caminho de ", self.grid.enderecoPizzaHut, " -> ", self.grid.listaDePedidos[0] )
+        self.melhorCaminhoDFS.reverse()
+        print(self.melhorCaminhoDFS)
+        print("CUSTO TOTAL: ",ct)
+        
+        self.parametro = 2
+        self.melhorCaminhoDFS = []
+        ct = 0
+        self.criaTabelaDFS()
+        self.dfs()
+        proximo = self.grid.listaDePedidos[0]
+        self.melhorCaminhoDFS.append(proximo)
+        ct = self.custo_pi_finali[proximo][0]
+        while self.custo_pi_finali[proximo][1] != "null":
+            self.melhorCaminhoDFS.append(self.custo_pi_finali[proximo][1])
+            proximo = self.custo_pi_finali[proximo][1]
+        print("\nDISTANCIA/TEMPO")
+        print("melhor caminho de ", self.grid.enderecoPizzaHut, " -> ", self.grid.listaDePedidos[0] )
+        self.melhorCaminhoDFS.reverse()
+        print(self.melhorCaminhoDFS)
+        print("CUSTO TOTAL: ",ct)
+        print("\n\n\n\n\n\n")
+
+
       
 
     def criaTabelaDFS(self):
+        self.custo_pi_finali = []
         for i in range(self.grafo.numeroVertices):
             linha = []
             for x in range(2):
@@ -47,7 +84,7 @@ class Entregador:
                 print(str(self.custo_pi_finali[i][x]) , "       ", end="")
             print("")
 
-    def dfs(self):        
+    def dfs(self):      
 
         vertReferencia = self.grid.enderecoPizzaHut
         for i in range(self.grafo.numeroVertices):
