@@ -6,79 +6,107 @@ class Entregador:
         self.teste = "testando"
         self.grafo = grafo
         self.grid = grid
-        self.custo_pi = []
+        self.custo_pi_finali = []
         self.melhorCaminhoDFS = []
         self.parametro = 0
-
-        #pegar o endereço da pizzaria para inciar o DFS
-        self.vertice_inicial_entrega = 0
-
     
     def melhorCaminho(self):
+
+        self.melhorCaminhoDFS = []
+        ct = 0
         self.criaTabelaDFS()
-        self.printTabelaDFS()
         self.dfs()
 
-        print("\nmelhor caminho de ", self.grid.enderecoPizzaHut, " -> ", self.grid.listaDePedidos[0])
-        
-        print(self.melhorCaminhoDFS)
+        proximo = self.grid.listaDePedidos[0]
+        self.melhorCaminhoDFS.append(proximo)
+        ct = self.custo_pi_finali[proximo][0]
+        while self.custo_pi_finali[proximo][1] != "null":
+            self.melhorCaminhoDFS.append(self.custo_pi_finali[proximo][1])
+            proximo = self.custo_pi_finali[proximo][1]
 
-        self.printTabelaDFS()
+        print("\nTEMPO")
+        print("melhor caminho de ", self.grid.enderecoPizzaHut, " -> ", self.grid.listaDePedidos[0] )
+        self.melhorCaminhoDFS.reverse()
+        print(self.melhorCaminhoDFS)
+        print("CUSTO TOTAL: ",ct)
+       
+        print("\n\n\n\n\n\n")
 
     def criaTabelaDFS(self):
+        self.custo_pi_finali = []
         for i in range(self.grafo.numeroVertices):
             linha = []
             for x in range(2):
                 linha.append("null")
-            self.custo_pi.append(linha)
-        print("variavel teste: ", self.grafo.arestas[0][1][0])
+            linha.append(0)
+            self.custo_pi_finali.append(linha)
 
     def printTabelaDFS(self):
-        print("\nDFS-------- -  CUSTO  -  PI ")
+        print("\nDFS-------- -  CUSTO  -  PI  -  Finali. ")
         for i in range(self.grafo.numeroVertices):
             print("Vertice", i, ":    ", end="")
-            for x in range(2):
-                print(str(self.custo_pi[i][x]) , "    ", end="")
+            for x in range(3):
+                print(str(self.custo_pi_finali[i][x]) , "       ", end="")
             print("")
 
-    def dfs(self):        
-        vertice_inicial = self.grid.enderecoPizzaHut
-        vertice_final = self.grafo.numeroVertices
+    def dfs(self):      
 
-        self.dfs_visit(vertice_inicial, vertice_final)
+        vertReferencia = self.grid.enderecoPizzaHut
+        for i in range(self.grafo.numeroVertices):
 
-        if vertice_inicial > 0:
-            vertice_inicial = 0
-            vertice_final = self.grid.enderecoPizzaHut
-            self.dfs_visit(vertice_inicial, vertice_final)
+            if i > 0:
+                vertReferencia = self.buscarMenor(self.custo_pi_finali)
+            
+            for destino in range(self.grafo.numeroVertices):    
 
+                # primeira rodada onde o vertReferencia é o ponto de partida(custo é 0 e anterior é Null)
+                if i == 0 and destino == vertReferencia:
+                        self.custo_pi_finali[destino][0] = 0
 
-    def dfs_visit(self, vertice_inicial, vertice_final):
-        for saidaVerticeX_linha in range(vertice_inicial ,vertice_final):
-            for destinoVerticeX_coluna in range(vertice_final):
+                # SE (aresta de referencia p/ Destino for valida) E (destino ainda não visitado)
+                elif self.grafo.arestas[vertReferencia][destino][self.parametro] > 0 and self.custo_pi_finali[destino][2] == 0:
 
-                if saidaVerticeX_linha == self.grid.enderecoPizzaHut:
-                    self.custo_pi[vertice_inicial][0] = 0
+                    # se o custo para um vertice for INfinito então coloca o primeiro valor que encontrar
+                    if self.custo_pi_finali[destino][0] == "null":
 
-                # se a aresta existir(peso > 0)
-                elif self.grafo.arestas[saidaVerticeX_linha][destinoVerticeX_coluna][self.parametro] > 0:
+                        # tratamanto para primeira rodada quando, EVITA soma da proxima aresta com custo atual
+                        # quando custo atual vale string NULL (da erro se somar INT + STR) 
+                        if i == 0:
+                            self.custo_pi_finali[destino][0] = self.grafo.arestas[vertReferencia][destino][self.parametro]
+                            self.custo_pi_finali[destino][1] = vertReferencia
+                        else:
+                            #                                               (INTEIRO)                                      +    (INTEIRO)-> na primeira rodada isso pode ser uma string "null"
+                            self.custo_pi_finali[destino][0] = self.grafo.arestas[vertReferencia][destino][self.parametro] + self.custo_pi_finali[vertReferencia][0]
+                            self.custo_pi_finali[destino][1] = vertReferencia
 
-                    # se o custo for menor que o infinito
-                    custoDaAresta = self.grafo.arestas[saidaVerticeX_linha][destinoVerticeX_coluna][self.parametro] 
+                    else:
+                        #SE o vertice de destino ja tiver um valor, nos somamos a aresta q vai pra ele mais o custo do Vertice que o descubriu
+                        # se for menor então temos um caminho melhor e subistituimos.
+                        if self.grafo.arestas[vertReferencia][destino][self.parametro] + self.custo_pi_finali[vertReferencia][0] < self.custo_pi_finali[destino][0]:
+                            self.custo_pi_finali[destino][0] = self.grafo.arestas[vertReferencia][destino][self.parametro] + self.custo_pi_finali[vertReferencia][0]
+                            self.custo_pi_finali[destino][1] = vertReferencia
+            
+            self.custo_pi_finali[vertReferencia][2] = 1 # finaliza a referencia
+
                 
-                    if self.custo_pi[destinoVerticeX_coluna][0] == "null":
-                        self.custo_pi[destinoVerticeX_coluna][0] = custoDaAresta
-                        self.custo_pi[destinoVerticeX_coluna][1] = saidaVerticeX_linha
-                    
-                    elif(custoDaAresta + self.custo_pi[destinoVerticeX_coluna][0] < self.custo_pi[destinoVerticeX_coluna][0]):
-                        self.custo_pi[destinoVerticeX_coluna][0] = custoDaAresta + self.custo_pi[destinoVerticeX_coluna][0]    
-                        self.custo_pi[destinoVerticeX_coluna][1] = saidaVerticeX_linha
+    def buscarMenor(self, lista):
+        # csuto e seu indice
+        menor = [None ,None]
+        primeiroValorMenor = 0
+
+        # pega o menor valor da lista(valores com custo != INFINITO(null))
+        for i in range(len(lista)):
+            if lista[i][0] != "null" and lista[i][2] != 1 and primeiroValorMenor == 0:
+                menor[0] = lista[i][0]
+                menor[1] = i
+                primeiroValorMenor = 1
+                
+        # dentre os valores menores que INFINITO(null) e não visitados, retorna o menor deles e seu Vertice
+        for i in range(len(lista)):
+            if lista[i][0] != "null" and lista[i][2] != 1:
+                if lista[i][0] < menor[0]:
+                    menor[0] = lista[i][0]
+                    menor[1] = i
+        return menor[1]
         
-
-        
-
-
-
-
-
-    
+   

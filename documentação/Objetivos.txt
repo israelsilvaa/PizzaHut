@@ -1,17 +1,18 @@
 -----------------Trabalho 5: Entregador de Pizzas-----------------
 
 1:  Gerar um mapa em grid de tamanho NxN.
-    OK
+     ---OK---
 
 2:  Considere que cada caminho desse grid possui um tempo
     de passagem e uma distância (ambos aleatórios).
-    OK
+     ---OK---
 
 3:  Para 1 entregador de pizza ache os três melhores caminhos
     para 1 destino considerando:
         •Tempo
         •Menorcaminho
         •Ambosaomesmotempo
+      ---OK---
 
 4:  Faça o mesmo para D destinos consecutivos.
 

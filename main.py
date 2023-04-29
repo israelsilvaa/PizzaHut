@@ -9,7 +9,6 @@ if __name__ == "__main__":
     tela.limparTela()
 
     tamanhoGrid = 3
-    
 
     grafo = Grafo(tamanhoGrid)
 
@@ -25,4 +24,5 @@ if __name__ == "__main__":
 
     julinDaCg160.melhorCaminho()
 
-    grafo.getMatrizAdjacencias()
+
+    # grafo.getMatrizAdjacencias()
