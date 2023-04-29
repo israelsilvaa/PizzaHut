@@ -1,15 +1,13 @@
 import random
-
 from enums.icone import Icone
 from modulos.grafo import Grafo
-
 
 class Grid:
     def __init__(self, grafo: Grafo, tamanhoGrid: int):
         self.grid = []
         self.grafo = grafo
         self.tamanhoGrid: int = tamanhoGrid
-        random.seed(36)
+        # random.seed(36)
         self.enderecoPizzaHut = random.randint(1, self.grafo.numeroVertices - 1)
         self.tipoAresta = 3
         self.quantEntregas = 1
@@ -18,7 +16,6 @@ class Grid:
     def gerarGrid(self):
 
         # gerando pedidos aleatorios( != da pizzaria)
-
         endereco = random.randint(0, self.grafo.numeroVertices - 1)
         for i in range(self.quantEntregas):
             while True:
@@ -32,8 +29,7 @@ class Grid:
         print('\033[0;30;41mQuant Vertices\033[m', self.grafo.numeroVertices)
         print("EPIZZAHUT : ", self.enderecoPizzaHut)
         print("entregador : ", self.enderecoPizzaHut)
-        print("cliente : ", self.listaDePedidos)
-        self.listaDePedidos[0] = 2 
+        print("lista de entregas : ", self.listaDePedidos)
 
         # Criando matriz do GRID e setando endereços de clientes
         c = 0

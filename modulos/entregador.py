@@ -9,63 +9,28 @@ class Entregador:
         self.custo_pi_finali = []
         self.melhorCaminhoDFS = []
         self.parametro = 0
-
-        #pegar o endereço da pizzaria para inciar o DFS
-        self.vertice_inicial_entrega = 0
     
     def melhorCaminho(self):
 
-        self.criaTabelaDFS()
-        self.dfs()
-        proximo = self.grid.listaDePedidos[0]
-        self.melhorCaminhoDFS.append(proximo)
-        ct = self.custo_pi_finali[proximo][0]
-        while self.custo_pi_finali[proximo][1] != "null":
-            self.melhorCaminhoDFS.append(self.custo_pi_finali[proximo][1])
-            proximo = self.custo_pi_finali[proximo][1]
-        print("DISTANCIA")
-        print("melhor caminho de ", self.grid.enderecoPizzaHut, " -> ", self.grid.listaDePedidos[0] )
-        self.melhorCaminhoDFS.reverse()
-        print(self.melhorCaminhoDFS)
-        print("CUSTO TOTAL: ",ct)
-        
-        self.parametro = 1
         self.melhorCaminhoDFS = []
         ct = 0
         self.criaTabelaDFS()
         self.dfs()
+
         proximo = self.grid.listaDePedidos[0]
         self.melhorCaminhoDFS.append(proximo)
         ct = self.custo_pi_finali[proximo][0]
         while self.custo_pi_finali[proximo][1] != "null":
             self.melhorCaminhoDFS.append(self.custo_pi_finali[proximo][1])
             proximo = self.custo_pi_finali[proximo][1]
+
         print("\nTEMPO")
         print("melhor caminho de ", self.grid.enderecoPizzaHut, " -> ", self.grid.listaDePedidos[0] )
         self.melhorCaminhoDFS.reverse()
         print(self.melhorCaminhoDFS)
         print("CUSTO TOTAL: ",ct)
-        
-        self.parametro = 2
-        self.melhorCaminhoDFS = []
-        ct = 0
-        self.criaTabelaDFS()
-        self.dfs()
-        proximo = self.grid.listaDePedidos[0]
-        self.melhorCaminhoDFS.append(proximo)
-        ct = self.custo_pi_finali[proximo][0]
-        while self.custo_pi_finali[proximo][1] != "null":
-            self.melhorCaminhoDFS.append(self.custo_pi_finali[proximo][1])
-            proximo = self.custo_pi_finali[proximo][1]
-        print("\nDISTANCIA/TEMPO")
-        print("melhor caminho de ", self.grid.enderecoPizzaHut, " -> ", self.grid.listaDePedidos[0] )
-        self.melhorCaminhoDFS.reverse()
-        print(self.melhorCaminhoDFS)
-        print("CUSTO TOTAL: ",ct)
+       
         print("\n\n\n\n\n\n")
-
-
-      
 
     def criaTabelaDFS(self):
         self.custo_pi_finali = []
@@ -88,24 +53,35 @@ class Entregador:
 
         vertReferencia = self.grid.enderecoPizzaHut
         for i in range(self.grafo.numeroVertices):
+
             if i > 0:
                 vertReferencia = self.buscarMenor(self.custo_pi_finali)
             
             for destino in range(self.grafo.numeroVertices):    
+
+                # primeira rodada onde o vertReferencia é o ponto de partida(custo é 0 e anterior é Null)
                 if i == 0 and destino == vertReferencia:
                         self.custo_pi_finali[destino][0] = 0
 
-                elif self.grafo.arestas[vertReferencia][destino][self.parametro] > 0 and self.custo_pi_finali[destino][2] == 0:# aresta E nFinalizado
+                # SE (aresta de referencia p/ Destino for valida) E (destino ainda não visitado)
+                elif self.grafo.arestas[vertReferencia][destino][self.parametro] > 0 and self.custo_pi_finali[destino][2] == 0:
 
+                    # se o custo para um vertice for INfinito então coloca o primeiro valor que encontrar
                     if self.custo_pi_finali[destino][0] == "null":
+
+                        # tratamanto para primeira rodada quando, EVITA soma da proxima aresta com custo atual
+                        # quando custo atual vale string NULL (da erro se somar INT + STR) 
                         if i == 0:
                             self.custo_pi_finali[destino][0] = self.grafo.arestas[vertReferencia][destino][self.parametro]
                             self.custo_pi_finali[destino][1] = vertReferencia
                         else:
+                            #                                               (INTEIRO)                                      +    (INTEIRO)-> na primeira rodada isso pode ser uma string "null"
                             self.custo_pi_finali[destino][0] = self.grafo.arestas[vertReferencia][destino][self.parametro] + self.custo_pi_finali[vertReferencia][0]
                             self.custo_pi_finali[destino][1] = vertReferencia
 
                     else:
+                        #SE o vertice de destino ja tiver um valor, nos somamos a aresta q vai pra ele mais o custo do Vertice que o descubriu
+                        # se for menor então temos um caminho melhor e subistituimos.
                         if self.grafo.arestas[vertReferencia][destino][self.parametro] + self.custo_pi_finali[vertReferencia][0] < self.custo_pi_finali[destino][0]:
                             self.custo_pi_finali[destino][0] = self.grafo.arestas[vertReferencia][destino][self.parametro] + self.custo_pi_finali[vertReferencia][0]
                             self.custo_pi_finali[destino][1] = vertReferencia
@@ -118,12 +94,14 @@ class Entregador:
         menor = [None ,None]
         primeiroValorMenor = 0
 
+        # pega o menor valor da lista(valores com custo != INFINITO(null))
         for i in range(len(lista)):
             if lista[i][0] != "null" and lista[i][2] != 1 and primeiroValorMenor == 0:
                 menor[0] = lista[i][0]
                 menor[1] = i
                 primeiroValorMenor = 1
                 
+        # dentre os valores menores que INFINITO(null) e não visitados, retorna o menor deles e seu Vertice
         for i in range(len(lista)):
             if lista[i][0] != "null" and lista[i][2] != 1:
                 if lista[i][0] < menor[0]:
@@ -131,11 +109,4 @@ class Entregador:
                     menor[1] = i
         return menor[1]
         
-
-        
-
-
-
-
-
-    
+   

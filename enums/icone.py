@@ -2,7 +2,7 @@ from enum import Enum
 
 
 class Icone(Enum):
-    PIZZA = "\U0001F355"
+    PIZZA = "\U0001F6F5"
     PIZZARIA = "\U0001F3ED"
     RESIDENCIA = "\U0001F9D1"
     ENTREGUE = "\U00002705"
