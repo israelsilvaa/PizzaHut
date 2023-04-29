@@ -22,7 +22,7 @@ if __name__ == "__main__":
 
     grid.mostrarGrid()
 
-    julinDaCg160.melhorCaminho()
+    julinDaCg160.iniciarEntregas()
 
 
     # grafo.getMatrizAdjacencias()

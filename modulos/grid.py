@@ -7,16 +7,18 @@ class Grid:
         self.grid = []
         self.grafo = grafo
         self.tamanhoGrid: int = tamanhoGrid
-        # random.seed(36)
+        # random.seed(32)
         self.enderecoPizzaHut = random.randint(1, self.grafo.numeroVertices - 1)
         self.tipoAresta = 3
-        self.quantEntregas = 1
+        self.quantEntregas = 3
         self.listaDePedidos = []
 
     def gerarGrid(self):
 
         # gerando pedidos aleatorios( != da pizzaria)
-        endereco = random.randint(0, self.grafo.numeroVertices - 1)
+        
+        # endereço de entregaga aleatorio e 0 == não entregue
+        endereco = [random.randint(0, self.grafo.numeroVertices - 1), 0]
         for i in range(self.quantEntregas):
             while True:
                 endereco = random.randint(0, self.grafo.numeroVertices - 1)
@@ -26,20 +28,18 @@ class Grid:
                     self.listaDePedidos.append(endereco)
                     break
 
-        print('\033[0;30;41mQuant Vertices\033[m', self.grafo.numeroVertices)
-        print("EPIZZAHUT : ", self.enderecoPizzaHut)
-        print("entregador : ", self.enderecoPizzaHut)
-        print("lista de entregas : ", self.listaDePedidos)
-
         # Criando matriz do GRID e setando endereços de clientes
         c = 0
         for linha in range(0, self.tamanhoGrid):
             valoresLinha = []
             for coluna in range(0, self.tamanhoGrid):
+
+            
                 if c in self.listaDePedidos:
-                    vertice_icone = [c, 3]  # mudar pra 3
+                    vertice_icone = [c, 3]  # mudar pra 3(icone cliente)
                 else:
                     vertice_icone = [c, 0]
+                        
                 valoresLinha.append(vertice_icone)
                 c += 1
             self.grid.append(valoresLinha)
@@ -64,7 +64,7 @@ class Grid:
         else:
             ajusteEspacoHorizontal = "     "
 
-        print("Grid: ")
+        print("Grid: ", self.tamanhoGrid,"x", self.tamanhoGrid)
         for linha in range(0, self.tamanhoGrid):
             for coluna in range(0, self.tamanhoGrid):
 
@@ -75,8 +75,8 @@ class Grid:
                         self._printarArestaHorizontal(linha, coluna)
                     elif self.grafo.numeroVertices > 9 and self.grid[linha][coluna][0] < 10:
                         print(
-                            Icone.INICIO.value + "0" +
-                            f"{self.grid[linha][coluna][0]}" + Icone.FIM.value,
+                            Icone.COR_VERMELHO.value + "0" +
+                            f"{self.grid[linha][coluna][0]}" + Icone.FIM_COR.value,
                             ajusteEspacoHorizontal, end="")
                         
                         self._printarArestaHorizontal(linha, coluna)
@@ -85,8 +85,8 @@ class Grid:
                             ajusteEspacoHorizontal, end="")
                         self._printarArestaHorizontal(linha, coluna)
                     else:
-                        print(Icone.INICIO.value + f"{self.grid[linha][coluna][0]}"+
-                              Icone.FIM.value, ajusteEspacoHorizontal, end="")
+                        print(Icone.COR_VERMELHO.value + f"{self.grid[linha][coluna][0]}"+
+                              Icone.FIM_COR.value, ajusteEspacoHorizontal, end="")
                         self._printarArestaHorizontal(linha, coluna)
 
                 elif 1 == self.grid[linha][coluna][1]:
