@@ -3,8 +3,7 @@ class Grafo:
 
     def __init__(self, tamanhoDoGrid):
         self.numeroVertices = tamanhoDoGrid * tamanhoDoGrid
-        self.arestas = [[[0, 0, 0] for i in range(self.numeroVertices)]
-                        for j in range(self.numeroVertices)]
+        self.arestas = [[[0, 0, 0] for i in range(self.numeroVertices)]for j in range(self.numeroVertices)]
 
     def adicionarAresta(self, vertice1, vertice2, distancia, tempo):
         self.arestas[vertice1][vertice2] = [distancia, tempo, round(tempo / distancia)]
