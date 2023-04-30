@@ -20,8 +20,6 @@ if __name__ == "__main__":
     
     julinDaCg160 = Entregador(grafo, grid)
 
-    grid.mostrarGrid()
-
     julinDaCg160.iniciarEntregas()
 
 

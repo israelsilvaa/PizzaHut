@@ -1,3 +1,4 @@
+import time
 from modulos.grafo import Grafo
 from modulos.tela import Tela
 from enums.icone import Icone
@@ -5,9 +6,9 @@ from modulos.grid import Grid
 class Entregador:
 
     def __init__(self, grafo: Grafo, grid: Grid):
-        self.teste = "testando"
         self.grafo = grafo
         self.grid = grid
+        self.tela = Tela()
         self.custo_pi_finali = []
         self.melhorCaminhoDFS = []
         self.parametro = 0
@@ -18,19 +19,24 @@ class Entregador:
         self.cloneListaDeEntregas()
         self.dfs(self.grid.enderecoPizzaHut)
         caminhoCusto = self.pegarMenorCaminhoDaTabela()
+        self.moverEntregador(caminhoCusto[0])
+        self.finalizaEndereco(self.pegarEnderecoMaisPerto()) 
+  
+        while(self.pegarEnderecoMaisPerto() != None):
+            self.dfs(self.grid.entregador)
+            caminhoCusto = self.pegarMenorCaminhoDaTabela()
+            self.moverEntregador(caminhoCusto[0])
+            self.finalizaEndereco(self.pegarEnderecoMaisPerto()) 
 
-        print("lista de entregas : ",  self.listaEntrega_endStatus)
-        print("EPIZZAHUT : ", self.grid.enderecoPizzaHut)
-        print("\nDISTANCIA:")
-        print("melhor caminho de ",Icone.COR_VERDE.value + str(self.grid.enderecoPizzaHut)+Icone.FIM_COR.value,
-               "->"+Icone.COR_VERMELHO.value + str(caminhoCusto[0])+Icone.FIM_COR.value+"->",
-                 Icone.COR_VERDE.value + str(self.pegarEnderecoMaisPerto())+Icone.FIM_COR.value)
-        print("CUSTO TOTAL: ",Icone.COR_AMARELO.value +str(caminhoCusto[1])+Icone.FIM_COR.value)
- 
-        #self.moverEntregador(caminhoCusto[0])
-        
-    
-    def moverEntregador(self, caminho):
+            print("lista de entregas : ",  self.listaEntrega_endStatus)
+            print("lista de entregas : ",  self.pegarEnderecoMaisPerto())
+           
+    def finalizaEndereco(self, endereco):
+        for i in range(len(self.listaEntrega_endStatus)):
+            if endereco == self.listaEntrega_endStatus[i][0]:
+                self.listaEntrega_endStatus[i][1] = 1
+
+    def moverEntregador(self, caminho):    
         """
         0 == imprimir vertice normalmente
         1 ==  icone da pizzaria
@@ -39,7 +45,67 @@ class Entregador:
         4 == check -> V (entrega feita)
         5 == pizzaria e entregador
         """
-        print("\ncaminho-----------", caminho)
+        for i in range(len(caminho)):
+
+            for linha in range(0, self.grid.tamanhoGrid):
+                for coluna in range(0, self.grid.tamanhoGrid):
+
+                    vertice = self.grid.grid[linha][coluna][0]
+                    icone = self.grid.grid[linha][coluna][1]
+
+                    if vertice == self.grid.entregador:
+                        
+                        if vertice in self.grid.listaDePedidos:
+                            self.grid.grid[linha][coluna][1] = 3
+                        elif vertice == self.grid.enderecoPizzaHut:
+                            self.grid.grid[linha][coluna][1] = 1
+                        else:
+                            self.grid.grid[linha][coluna][1] = 0
+            
+            # time.sleep(1)
+            # tela.limparTela()
+            # self.painel()
+            # self.grid.mostrarGrid()
+
+            for linha in range(0, self.grid.tamanhoGrid):
+                for coluna in range(0, self.grid.tamanhoGrid):
+
+                    vertice = self.grid.grid[linha][coluna][0]
+                    if vertice == caminho[i]:
+                        self.grid.grid[linha][coluna][1] = 2
+                        self.grid.entregador = caminho[i]
+
+            time.sleep(self.tela.velociadeAtualizacao)
+            self.tela.limparTela()
+            self.painel()
+            self.grid.mostrarGrid()
+
+            if caminho[-1] == self.grid.entregador:
+                
+                # MARCA ENDEREÇO COMO ENTREGUE
+                # for i in range(len(self.listaEntrega_endStatus)):
+                #     if self.listaEntrega_endStatus[i][0] == caminho[-1]:
+                #         self.listaEntrega_endStatus[i][1] = 1
+                     
+                for linha in range(0, self.grid.tamanhoGrid):
+                    for coluna in range(0, self.grid.tamanhoGrid):
+
+                        vertice = self.grid.grid[linha][coluna][0]
+                        if vertice == caminho[-1]:
+                            self.grid.grid[linha][coluna][1] = 4
+
+            time.sleep(self.tela.velociadeAtualizacao)
+            self.tela.limparTela()
+            self.painel()
+            self.grid.mostrarGrid()
+
+    def painel(self):
+        print("lista de entregas : ",  self.listaEntrega_endStatus)
+        print("EPIZZAHUT : ", self.grid.enderecoPizzaHut)
+        print("entregador : ", self.grid.entregador)
+        print("melhor caminho de ",Icone.COR_VERDE.value + str(self.grid.enderecoPizzaHut)+Icone.FIM_COR.value,
+               "->"+Icone.COR_VERMELHO.value + str(self.melhorCaminhoDFS)+Icone.FIM_COR.value+"->",
+                 Icone.COR_VERDE.value + str(self.pegarEnderecoMaisPerto())+Icone.FIM_COR.value)
 
     def cloneListaDeEntregas(self):
         for i in range(len(self.grid.listaDePedidos)):
@@ -48,6 +114,7 @@ class Entregador:
 
     def pegarEnderecoMaisPerto(self):
 
+        menorCustoEndere = None
         for i in range(len(self.listaEntrega_endStatus)):
             if self.listaEntrega_endStatus[i][1] == 0:
                 menorCustoEndere = [self.custo_pi_finali[self.listaEntrega_endStatus[i][0]][0], self.listaEntrega_endStatus[i][0]]
@@ -56,18 +123,15 @@ class Entregador:
         for i in range(len(self.listaEntrega_endStatus)):
             if self.listaEntrega_endStatus[i][1] == 0 and self.custo_pi_finali[self.listaEntrega_endStatus[i][0]][0] < menorCustoEndere[0]:
                 menorCustoEndere = [self.custo_pi_finali[self.listaEntrega_endStatus[i][0]][0], self.listaEntrega_endStatus[i][0]]
-                
-
-                """
-                essa linha marca um endereço como ENTREGUE, mas deve ser feito apos o entregador chegar lá
-                self.listaEntrega_endStatus[i][1] = 1
-                
-                """
-
-        return menorCustoEndere[1]
-            
+        
+        if menorCustoEndere != None:
+            return menorCustoEndere[1]
+        else:
+            return None
 
     def pegarMenorCaminhoDaTabela(self):
+        self.melhorCaminhoDFS = []
+        custoTotalDoCaminho = 0
 
         proximo = self.pegarEnderecoMaisPerto()
 
@@ -95,10 +159,14 @@ class Entregador:
 
         print("\nDFS-------- -  CUSTO  -  PI  -  Finali. ")
         for i in range(self.grafo.numeroVertices):
+
+            # VERTICE X: 
             if i in self.grid.listaDePedidos:
                 print(Icone.COR_VERMELHO.value+"Vertice"+Icone.FIM_COR.value, i, ":    ", end="")
             else:
                 print("Vertice", i, ":    ", end="")
+
+            # CUSTO  -  PI  -  Finali.
             for x in range(3):
                 if i == self.pegarEnderecoMaisPerto():
                     print(Icone.COR_VERDE.value+str(self.custo_pi_finali[i][x])+Icone.FIM_COR.value , "       ", end="")
@@ -146,7 +214,7 @@ class Entregador:
             
             self.custo_pi_finali[vertReferencia][2] = 1 # finaliza a referencia
 
-                
+            
     def buscarMenor(self, lista):
         # csuto e seu indice
         menor = [None ,None]

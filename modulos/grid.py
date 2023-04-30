@@ -11,7 +11,7 @@ class Grid:
         self.enderecoPizzaHut = random.randint(1, self.grafo.numeroVertices - 1)
         self.entregador = self.enderecoPizzaHut
         self.tipoAresta = 3
-        self.quantEntregas = 3
+        self.quantEntregas = 1
         self.listaDePedidos = []
 
     def gerarGrid(self):
@@ -95,7 +95,7 @@ class Grid:
                           ajusteEspacoHorizontal, end="")
                     self._printarArestaHorizontal(linha, coluna)
                 elif 4 == self.grid[linha][coluna][1]:
-                    print(Icone.ENTREGUE.value,
+                    print(Icone.CHECK.value,
                           ajusteEspacoHorizontal, end="")
                     self._printarArestaHorizontal(linha, coluna)
                 elif 5 == self.grid[linha][coluna][1]:
