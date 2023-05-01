@@ -12,7 +12,7 @@ class Grid:
         self.entregador = self.enderecoPizzaHut
         
         self.listaDePedidos = []
-        self.quantEntregas = 2
+        self.quantEntregas = 1
         self.tipoCaminho = 0
 
         self.tipoAresta = 3

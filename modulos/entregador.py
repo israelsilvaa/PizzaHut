@@ -14,6 +14,8 @@ class Entregador:
         self.tipoCaminho = self.grid.tipoCaminho
         self.listaEntrega_endStatus = []
         self.custoTotalDaRota = 0
+        self.percursoTotal = []
+        self.custosPercursoTotal = []
 
     def iniciarEntregas(self):
 
@@ -21,12 +23,16 @@ class Entregador:
         self.dfs(self.grid.enderecoPizzaHut)
         caminhoCusto = self.pegarMenorCaminhoDaTabela()
         self.custoTotalDaRota = self.custoTotalDaRota + caminhoCusto[1]
+        self.percursoTotal.append(caminhoCusto[0])
+        self.custosPercursoTotal.append(caminhoCusto[1])
         self.moverEntregador(caminhoCusto[0])
         
         while(self.pegarEnderecoMaisPerto() != None):
             self.dfs(self.grid.entregador)
             caminhoCusto = self.pegarMenorCaminhoDaTabela()
             self.custoTotalDaRota = self.custoTotalDaRota + caminhoCusto[1]
+            self.percursoTotal.append(caminhoCusto[0])
+            self.custosPercursoTotal.append(caminhoCusto[1])
             self.moverEntregador(caminhoCusto[0])
 
         self.tela.limparTela()
@@ -120,14 +126,14 @@ class Entregador:
         print("\nEPIZZAHUT : ", self.grid.enderecoPizzaHut)
         print("entregador : ", self.grid.entregador)
         if self.pegarEnderecoMaisPerto() != None:
-            print("melhor caminho de             ", Icone.COR_VERDE.value + str(self.grid.entregador)+Icone.FIM_COR.value,"->   ", end="") 
+            print("melhor caminho de             ", Icone.COR_VERDE.value + str(self.melhorCaminhoDFS[0])+Icone.FIM_COR.value,"->   ", end="") 
             for i in range(len(self.melhorCaminhoDFS)):
                 if self.melhorCaminhoDFS[i] == self.grid.entregador:
                     print(Icone.COR_AMARELO.value + str(self.melhorCaminhoDFS[i])+Icone.FIM_COR.value, end=" - ")
                 else:
                     print(Icone.COR_VERMELHO.value + str(self.melhorCaminhoDFS[i])+Icone.FIM_COR.value, end=" - ")
     
-            print("   ->",Icone.COR_VERDE.value + str(self.pegarEnderecoMaisPerto())+Icone.FIM_COR.value)
+            print("   ->",Icone.COR_VERDE.value + str(self.melhorCaminhoDFS[-1])+Icone.FIM_COR.value)
         print(end="")
         if self.tipoCaminho == 0:
             print("Tipo de Caminho:  Distância")
@@ -139,8 +145,9 @@ class Entregador:
             print("Tipo de Caminho:  Distância/Tempo")
             print("Custo TOTAL caminho:", self.custoTotalDaRota, " metros/min")
     
+        print("Percurto total:", self.percursoTotal)
+        print("Custos:", self.custosPercursoTotal)
         print("Velocidade de atualização:", self.tela.velociadeAtualizacao)
-        print("Percurto total:  ((TODOS OS VERTICES POR ONDE PASSOU EM SEQUENCIA))")
         print("\nGrid: ", self.grid.tamanhoGrid,"x", self.grid.tamanhoGrid)
        
         

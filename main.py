@@ -7,15 +7,15 @@ if __name__ == "__main__":
 
     tela = Tela()
 
-    tamanhoGrid = 5
+    tamanhoGrid = 3
 
     grafo = Grafo(tamanhoGrid)
     grid = Grid(grafo, tamanhoGrid)
 
-    tela.velociadeAtualizacao = 0.5
+    tela.velociadeAtualizacao = 4
     grid.tipoCaminho = 0
     grid.enderecoPizzaHut = 0
-    grid.quantEntregas = 6
+    grid.quantEntregas = 3
 
     grid.gerarGrid()
 
