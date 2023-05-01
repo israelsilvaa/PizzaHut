@@ -15,6 +15,10 @@
       ---OK---
 
 4:  Faça o mesmo para D destinos consecutivos.
+      ---OK---
+    
 
 5:  Realize várias simulações e mostre elas rodando na aplicação
     dando a opção de trocar de parâmetros.
+
+        -Necessário implementação do menu!

@@ -45,7 +45,6 @@ class Entregador:
         2 ==  Entregador
         3 == cliente
         4 == check -> V (entrega feita)
-        5 == pizzaria e entregador
         """
         for i in range(len(caminho)):
 
