@@ -6,13 +6,16 @@ class Grid:
     def __init__(self, grafo: Grafo, tamanhoGrid: int):
         self.grid = []
         self.grafo = grafo
+        
         self.tamanhoGrid: int = tamanhoGrid
-        random.seed(32)
         self.enderecoPizzaHut = random.randint(1, self.grafo.numeroVertices - 1)
         self.entregador = self.enderecoPizzaHut
-        self.tipoAresta = 3
-        self.quantEntregas = 2
+        
         self.listaDePedidos = []
+        self.quantEntregas = 2
+        self.tipoCaminho = 0
+
+        self.tipoAresta = 3
 
     def gerarGrid(self):
 
@@ -58,7 +61,6 @@ class Grid:
         else:
             ajusteEspacoHorizontal = "     "
 
-        print("\nGrid: ", self.tamanhoGrid,"x", self.tamanhoGrid)
         for linha in range(0, self.tamanhoGrid):
             for coluna in range(0, self.tamanhoGrid):
 
@@ -99,6 +101,10 @@ class Grid:
                           ajusteEspacoHorizontal, end="")
                     self._printarArestaHorizontal(linha, coluna)
                 elif 5 == self.grid[linha][coluna][1]:
+                    print(Icone.CHECK.value,Icone.ENTREGADOR.value,
+                          ajusteEspacoHorizontal, end="")
+                    self._printarArestaHorizontal(linha, coluna)
+                elif 6 == self.grid[linha][coluna][1]:
                     print(Icone.PIZZARIA.value, Icone.ENTREGADOR.value,
                           ajusteEspacoHorizontal, end="")
                     self._printarArestaHorizontal(linha, coluna)
