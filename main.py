@@ -12,7 +12,7 @@ if __name__ == "__main__":
     grafo = Grafo(tamanhoGrid)
     grid = Grid(grafo, tamanhoGrid)
 
-    tela.velociadeAtualizacao = 1
+    tela.velociadeAtualizacao = 0.5
     grid.tipoCaminho = 0
     grid.enderecoPizzaHut = 0
     grid.quantEntregas = 6

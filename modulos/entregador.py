@@ -140,6 +140,7 @@ class Entregador:
             print("Custo TOTAL caminho:", self.custoTotalDaRota, " metros/min")
     
         print("Velocidade de atualização:", self.tela.velociadeAtualizacao)
+        print("Percurto total:  ((TODOS OS VERTICES POR ONDE PASSOU EM SEQUENCIA))")
         print("\nGrid: ", self.grid.tamanhoGrid,"x", self.grid.tamanhoGrid)
        
         
