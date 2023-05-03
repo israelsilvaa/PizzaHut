@@ -11,7 +11,7 @@ class Entregador:
         self.tela = tela
         self.custo_pi_finali = []
         self.melhorCaminhoDFS = []
-        self.tipoCaminho = self.grid.tipoCaminho
+        self.tipoDeAresta = self.grid.tipoDeAresta
         self.listaEntrega_endStatus = []
         self.custoTotalDaRota = 0
         self.percursoTotal = []
@@ -110,6 +110,11 @@ class Entregador:
                         vertice = self.grid.grid[linha][coluna][0]
                         if vertice == caminho[-1]:
                             self.grid.grid[linha][coluna][1] = 5
+                            # aqui atualizamos a tela(esperar > limpar > mostraPainel > mostraGrid)
+                            time.sleep(self.tela.velociadeAtualizacao)
+                            self.tela.limparTela()
+                            self.painel()
+                            self.grid.mostrarGrid()
         
         #apos terminar a rota, o entrgador deve estar no endreço do cliente
         #então marcamos o endereço como Entregue/finalizado
@@ -135,10 +140,10 @@ class Entregador:
     
             print("   ->",Icone.COR_VERDE.value + str(self.melhorCaminhoDFS[-1])+Icone.FIM_COR.value)
         print(end="")
-        if self.tipoCaminho == 0:
+        if self.tipoDeAresta == 0:
             print("Tipo de Caminho:  Distância")
             print("Custo TOTAL caminho:", self.custoTotalDaRota, " metros")
-        elif self.tipoCaminho == 1:
+        elif self.tipoDeAresta == 1:
             print("Tipo de Caminho:  Tempo")
             print("Custo TOTAL caminho:", self.custoTotalDaRota, " minutos")
         else:
@@ -259,7 +264,7 @@ class Entregador:
                         self.custo_pi_finali[destino][0] = 0
 
                 # SE (aresta de referencia p/ Destino for valida) E (destino ainda não visitado)
-                elif self.grafo.arestas[vertReferencia][destino][self.tipoCaminho] > 0 and self.custo_pi_finali[destino][2] == 0:
+                elif self.grafo.arestas[vertReferencia][destino][self.tipoDeAresta] > 0 and self.custo_pi_finali[destino][2] == 0:
 
                     # se o custo para um vertice for INfinito então coloca o primeiro valor que encontrar
                     if self.custo_pi_finali[destino][0] == "null":
@@ -267,18 +272,18 @@ class Entregador:
                         # tratamanto para primeira rodada quando, EVITA soma da proxima aresta com custo atual
                         # quando custo atual vale string NULL (da erro se somar INT + STR) 
                         if i == 0:
-                            self.custo_pi_finali[destino][0] = self.grafo.arestas[vertReferencia][destino][self.tipoCaminho]
+                            self.custo_pi_finali[destino][0] = self.grafo.arestas[vertReferencia][destino][self.tipoDeAresta]
                             self.custo_pi_finali[destino][1] = vertReferencia
                         else:
                             #                                               (INTEIRO)                                      +    (INTEIRO)-> na primeira rodada isso pode ser uma string "null"
-                            self.custo_pi_finali[destino][0] = self.grafo.arestas[vertReferencia][destino][self.tipoCaminho] + self.custo_pi_finali[vertReferencia][0]
+                            self.custo_pi_finali[destino][0] = self.grafo.arestas[vertReferencia][destino][self.tipoDeAresta] + self.custo_pi_finali[vertReferencia][0]
                             self.custo_pi_finali[destino][1] = vertReferencia
 
                     else:
                         #SE o vertice de destino ja tiver um valor, nos somamos a aresta q vai pra ele mais o custo do Vertice que o descubriu
                         # se for menor então temos um caminho melhor e subistituimos.
-                        if self.grafo.arestas[vertReferencia][destino][self.tipoCaminho] + self.custo_pi_finali[vertReferencia][0] < self.custo_pi_finali[destino][0]:
-                            self.custo_pi_finali[destino][0] = self.grafo.arestas[vertReferencia][destino][self.tipoCaminho] + self.custo_pi_finali[vertReferencia][0]
+                        if self.grafo.arestas[vertReferencia][destino][self.tipoDeAresta] + self.custo_pi_finali[vertReferencia][0] < self.custo_pi_finali[destino][0]:
+                            self.custo_pi_finali[destino][0] = self.grafo.arestas[vertReferencia][destino][self.tipoDeAresta] + self.custo_pi_finali[vertReferencia][0]
                             self.custo_pi_finali[destino][1] = vertReferencia
             
             self.custo_pi_finali[vertReferencia][2] = 1 # finaliza a referencia
