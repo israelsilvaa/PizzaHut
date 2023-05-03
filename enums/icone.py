@@ -4,6 +4,7 @@ from enum import Enum
 class Icone(Enum):
     ENTREGADOR = "\U0001F6F5"
     PIZZARIA = "\U0001F3ED"
+    PIZZA = "\U0001F355"
     CLIENTE = "\U0001F9D1"
     CHECK = "\U00002705"
     N_ENTREGUE = "\U0000274C"

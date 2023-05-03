@@ -93,7 +93,7 @@ class Grid:
                     print(Icone.ENTREGADOR.value, ajusteEspacoHorizontal, end="")
                     self._printarArestaHorizontal(linha, coluna)
                 elif 3 == self.grid[linha][coluna][1]:
-                    print(Icone.CLIENTE.value,
+                    print(Icone.PIZZA.value,
                           ajusteEspacoHorizontal, end="")
                     self._printarArestaHorizontal(linha, coluna)
                 elif 4 == self.grid[linha][coluna][1]:
