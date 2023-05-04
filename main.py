@@ -28,14 +28,14 @@ if __name__ == "__main__":
             tela.painelConfigRapida(tamanhoGrid,tipoCaminho,enderecoPizzaHut,quantidateEntregas,velociadeAtualizacao, listaPedidos)
             print("\ninforme um vertice negativo para cancelar(ex: -1)")
             NovoPedido = int(input("\nAdicionar pedido:"))
-            if NovoPedido != -1:
+            if NovoPedido != -1 and not(NovoPedido in listaPedidos) and NovoPedido != enderecoPizzaHut:
                 listaPedidos.append(NovoPedido)
             while NovoPedido != -1:
                 tela.limparTela()
                 tela.painelConfigRapida(tamanhoGrid,tipoCaminho,enderecoPizzaHut,quantidateEntregas,velociadeAtualizacao, listaPedidos)
-                print("\ninforme um vertice negativo para cancelar(ex: -1)")
+                print("\ninforme [-1] para cancelar:")
                 NovoPedido = int(input("\nAdicionar pedido:"))
-                if NovoPedido != -1:
+                if NovoPedido != -1 and not(NovoPedido in listaPedidos) and NovoPedido != enderecoPizzaHut:
                     listaPedidos.append(NovoPedido)
                     quantidateEntregas = len(listaPedidos)
         if opc == 5:
