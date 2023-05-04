@@ -3,17 +3,27 @@ from enums.icone import Icone
 from modulos.grafo import Grafo
 
 class Grid:
-    def __init__(self, grafo: Grafo, tamanhoGrid: int):
+    def __init__(self, grafo: Grafo, tamanhoGrid: int, tipoDeAresta=0, enderecoPizzaHut=None, quantEntregas=1, listaPedidos=[]):
         self.grid = []
         self.grafo = grafo
         
         self.tamanhoGrid: int = tamanhoGrid
-        self.enderecoPizzaHut = random.randint(1, self.grafo.numeroVertices - 1)
+        if enderecoPizzaHut == None:
+            self.enderecoPizzaHut = random.randint(1, self.grafo.numeroVertices - 1)
+        else:
+            self.enderecoPizzaHut = enderecoPizzaHut
+
         self.entregador = self.enderecoPizzaHut
         
-        self.listaDePedidos = []
-        self.quantEntregas = 1
-        self.tipoDeAresta = 0
+        if len(listaPedidos) == 0:
+            self.listaDePedidos = []
+            self.criarListapedidosAleatorios = True
+        else:
+            self.listaDePedidos = listaPedidos.copy()
+            self.criarListapedidosAleatorios = False
+
+        self.quantEntregas = quantEntregas
+        self.tipoDeAresta = tipoDeAresta
 
         self.espacoAresta = 3
 
@@ -22,15 +32,16 @@ class Grid:
         # gerando pedidos aleatorios( != da pizzaria)
         
         # endereço de entregaga aleatorio e 0 == não entregue
-        endereco = [random.randint(0, self.grafo.numeroVertices - 1), 0]
-        for i in range(self.quantEntregas):
-            while True:
-                endereco = random.randint(0, self.grafo.numeroVertices - 1)
-                if endereco in self.listaDePedidos or endereco == self.enderecoPizzaHut:
+        if self.criarListapedidosAleatorios:
+            endereco = [random.randint(0, self.grafo.numeroVertices - 1), 0]
+            for i in range(self.quantEntregas):
+                while True:
                     endereco = random.randint(0, self.grafo.numeroVertices - 1)
-                else:
-                    self.listaDePedidos.append(endereco)
-                    break
+                    if endereco in self.listaDePedidos or endereco == self.enderecoPizzaHut:
+                        endereco = random.randint(0, self.grafo.numeroVertices - 1)
+                    else:
+                        self.listaDePedidos.append(endereco)
+                        break
 
         # Criando matriz do GRID e setando endereços de clientes
         c = 0
