@@ -121,15 +121,17 @@ class Entregador:
         self.finalizaEndereco(self.pegarEnderecoMaisPerto()) 
 
     def painel(self):
-        print("Lista de entregas[", self.grid.quantEntregas, "] :        ", end="")
+        print("    "*5+Icone.LOLOGPIZZAHUT.value)
+        print("------------"*4)
+        print("Entregas",Icone.CLIENTE.value,":[", self.grid.quantEntregas, "] :        ", end="")
         for i in range(len(self.listaEntrega_endStatus)):
             if self.listaEntrega_endStatus[i][1] == 1:
                 print("("+str(self.listaEntrega_endStatus[i][0])+Icone.CHECK.value, end=")   ")
             else:
                 print("("+str(self.listaEntrega_endStatus[i][0])+Icone.N_ENTREGUE.value, end=")   ")
 
-        print("\nEPIZZAHUT : ", self.grid.enderecoPizzaHut)
-        print("entregador : ", self.grid.entregador)
+        print("\nPizzaria:", Icone.PIZZARIA.value,":", self.grid.enderecoPizzaHut)
+        print("Entregador",Icone.ENTREGADOR.value,":", self.grid.entregador)
         if self.pegarEnderecoMaisPerto() != None:
             print("melhor caminho de             ", Icone.COR_VERDE.value + str(self.melhorCaminhoDFS[0])+Icone.FIM_COR.value,"->   ", end="") 
             for i in range(len(self.melhorCaminhoDFS)):
@@ -141,7 +143,7 @@ class Entregador:
             print("   ->",Icone.COR_VERDE.value + str(self.melhorCaminhoDFS[-1])+Icone.FIM_COR.value)
         print(end="")
         if self.tipoDeAresta == 0:
-            print("Tipo de Caminho:  Distância")
+            print("Tipo de aresta:  Distância")
             print("Custo TOTAL caminho:", self.custoTotalDaRota, " metros")
         elif self.tipoDeAresta == 1:
             print("Tipo de Caminho:  Tempo")

@@ -1,43 +1,58 @@
-import time
+from modulos.entregador import Entregador
 from modulos.grafo import Grafo
 from modulos.grid import Grid
 from modulos.tela import Tela
-from modulos.entregador import Entregador
+from enums.icone import Icone
+import random
+import time
 
 if __name__ == "__main__":
     tela = Tela()
         
     tamanhoGrid = 3
     tipoCaminho = 0
-    enderecoPizzaHut = None
+    enderecoPizzaHut = random.randint(1, tamanhoGrid*tamanhoGrid - 1)
     quantidateEntregas = 1
-    velociadeAtualizacao = 2
+    velociadeAtualizacao = 0.2
     listaPedidos = []
+
+    grafoPreview = Grafo(tamanhoGrid)
+    gridPreview = Grid(grafoPreview, tamanhoGrid, tipoCaminho, enderecoPizzaHut, quantidateEntregas, listaPedidos)
+    gridPreview.gerarGrid()
+    gridPreview.gerarArestasGrid()
+    gridPreview.mostrarGrid()
 
     opc = 1
     tela.limparTela()
-    tela.painelConfigRapida(tamanhoGrid,tipoCaminho,enderecoPizzaHut,quantidateEntregas,velociadeAtualizacao, listaPedidos)
+    # tela.painelConfigRapida(tamanhoGrid,tipoCaminho,enderecoPizzaHut,quantidateEntregas,velociadeAtualizacao, listaPedidos)
     while opc != 10:
         
         if opc != 0:
             tela.limparTela()
             tela.painelConfigRapida(tamanhoGrid,tipoCaminho,enderecoPizzaHut,quantidateEntregas,velociadeAtualizacao, listaPedidos)
+            
+            grafoPreview = Grafo(tamanhoGrid)
+            gridPreview = Grid(grafoPreview, tamanhoGrid, tipoCaminho, enderecoPizzaHut, quantidateEntregas, listaPedidos)
+            gridPreview.gerarGrid()
+            gridPreview.gerarArestasGrid()
+            gridPreview.mostrarGrid()
             opc = int(input("\nOpção:"))
         if opc == 6:
-            tela.limparTela()
-            tela.painelConfigRapida(tamanhoGrid,tipoCaminho,enderecoPizzaHut,quantidateEntregas,velociadeAtualizacao, listaPedidos)
-            print("\ninforme um vertice negativo para cancelar(ex: -1)")
-            NovoPedido = int(input("\nAdicionar pedido:"))
-            if NovoPedido != -1 and not(NovoPedido in listaPedidos) and NovoPedido != enderecoPizzaHut:
-                listaPedidos.append(NovoPedido)
+            NovoPedido = 99
             while NovoPedido != -1:
                 tela.limparTela()
                 tela.painelConfigRapida(tamanhoGrid,tipoCaminho,enderecoPizzaHut,quantidateEntregas,velociadeAtualizacao, listaPedidos)
-                print("\ninforme [-1] para cancelar:")
+                print("\n[-1]cancelar   [-2]Remover ultimo:")
                 NovoPedido = int(input("\nAdicionar pedido:"))
-                if NovoPedido != -1 and not(NovoPedido in listaPedidos) and NovoPedido != enderecoPizzaHut:
+                if NovoPedido >= 0 and not(NovoPedido in listaPedidos) and NovoPedido != enderecoPizzaHut and NovoPedido <= tamanhoGrid * tamanhoGrid - 1:
                     listaPedidos.append(NovoPedido)
                     quantidateEntregas = len(listaPedidos)
+                elif NovoPedido == -2 and len(listaPedidos) >= 1:
+                    listaPedidos.pop()
+                    quantidateEntregas = len(listaPedidos)
+                    if quantidateEntregas == 0:
+                        quantidateEntregas = 1
+
         if opc == 5:
             tela.limparTela()
             tela.painelConfigRapida(tamanhoGrid,tipoCaminho,enderecoPizzaHut,quantidateEntregas,velociadeAtualizacao, listaPedidos)
@@ -49,7 +64,9 @@ if __name__ == "__main__":
         elif opc == 3:
             tela.limparTela()
             tela.painelConfigRapida(tamanhoGrid,tipoCaminho,enderecoPizzaHut,quantidateEntregas,velociadeAtualizacao, listaPedidos)
-            enderecoPizzaHut = int(input("\nPonto de partida:"))
+            novoPontoPartida = int(input("\nPizzaria:"))
+            if not(novoPontoPartida in listaPedidos):
+                enderecoPizzaHut = novoPontoPartida
         elif opc == 2:
             tela.limparTela()
             tela.painelConfigRapida(tamanhoGrid,tipoCaminho,enderecoPizzaHut,quantidateEntregas,velociadeAtualizacao, listaPedidos)
@@ -69,7 +86,7 @@ if __name__ == "__main__":
             julinDaCg160 = Entregador(grafo, grid, tela)
             julinDaCg160.iniciarEntregas()
 
-            print("[0] - Sair     [1] - Rodar novamente      [2] - Configurar e rodar novamente:")
+            print("[0]-Sair",Icone.N_ENTREGUE.value, "     [1]-Repet",Icone.REPETIR.value, "     [2]-Config",Icone.CONFIG.value+" Repet"+Icone.REPETIR.value , ":")
             opc = int(input("\nOpção:"))
             if opc == 0:
                 opc = 10

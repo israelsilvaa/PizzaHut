@@ -15,25 +15,25 @@ class Tela():
       print("              Configurações rapidas\n")
       print("[10] - Sair")
       if len(listaPedidos) == 0:
-         print("[6] - Lista de Pedidos: 1 pedido aleatorio(default)")
+         print("[6] - Pedidos: ",quantidateEntregas," aleatorio(default)")
       else:
-         print("[6] - Lista de Pedidos:", listaPedidos)
-      print("[5] - Velocidade da simulação:", velociadeAtualizacao)
-      print("[4] - Quantidade de entregas:", quantidateEntregas)
+         print("[6] - Pedidos:", listaPedidos)
+      print("[5] - Velocidade:",float(velociadeAtualizacao), "'s")
+      print("[4] - Quant. de entregas:", quantidateEntregas)
 
       if enderecoPizzaHut == None:
-         print("[3] - Ponto de partida(0 a",tamanhoGrid*tamanhoGrid,"): Aleatorio")
+         print("[3] - Pizzaria(0 a",tamanhoGrid*tamanhoGrid - 1,"): Aleatorio")
       else:
-         print("[3] - Ponto de partida(0 a",tamanhoGrid*tamanhoGrid,"):", enderecoPizzaHut)
+         print("[3] - Pizzaria(0 a",tamanhoGrid*tamanhoGrid - 1,"):", enderecoPizzaHut)
       
       if tipoCaminho == 0:
-         print("[2] - Tipo de aresta(usada no DFS): Distancia")
+         print("[2] - Aresta(usada no DFS): Distancia")
       elif tipoCaminho == 1:
-         print("[2] - Tipo de aresta(usada no DFS): Tempo")
+         print("[2] - Aresta(usada no DFS): Tempo")
       elif tipoCaminho == 2:
-         print("[2] - Tipo de aresta(usada no DFS): Tempo/distancia")
+         print("[2] - Aresta(usada no DFS): Tempo/distancia")
       
-      print("[1] - Tamanho do grid:", tamanhoGrid, "x", tamanhoGrid)
+      print("[1] - Grid:", tamanhoGrid, "x", tamanhoGrid)
       print("[0] - concluir e iniciar simulação")
 
         

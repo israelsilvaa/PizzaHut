@@ -63,7 +63,7 @@ class Grid:
         for linha in range(self.tamanhoGrid):
             for coluna in range(self.tamanhoGrid):
                 if self.grid[linha][coluna][0] == self.enderecoPizzaHut:
-                    self.grid[linha][coluna][1] = 5
+                    self.grid[linha][coluna][1] = 6
 
     def mostrarGrid(self):
       
@@ -119,13 +119,14 @@ class Grid:
                     print(Icone.PIZZARIA.value, Icone.ENTREGADOR.value,
                           ajusteEspacoHorizontal, end="")
                     self._printarArestaHorizontal(linha, coluna)
-            
                     """
                     0 == imprimir vertice normalmente
                     1 ==  icone da pizzaria
                     2 ==  Entregador
                     3 == cliente
                     4 == check -> V (entrega feita)
+                    5 == check e entregador
+                    6 == Pizzaria e entregador
                     """
             print("\n")
             self._printarArestaVerticais(linha, coluna)
@@ -197,14 +198,11 @@ class Grid:
             C_aresta = self.grid[linha][coluna + 1][0]
 
             if self.espacoAresta == 0:
-                print("--", self.grafo.arestas[L_aresta][C_aresta]
-                        [self.espacoAresta], "--", ajusteEspacoHorizontal, end="")
+                print("--", self.grafo.arestas[L_aresta][C_aresta][self.espacoAresta], "--", ajusteEspacoHorizontal, end="")
             elif self.espacoAresta == 1:
-                print("--", self.grafo.arestas[L_aresta][C_aresta]
-                        [self.espacoAresta], "--", ajusteEspacoHorizontal, end="")
+                print("--", self.grafo.arestas[L_aresta][C_aresta][self.espacoAresta], "--", ajusteEspacoHorizontal, end="")
             elif self.espacoAresta == 2:
-                print("--", self.grafo.arestas[L_aresta][C_aresta]
-                        [self.espacoAresta], "--", ajusteEspacoHorizontal, end="")
+                print("--", self.grafo.arestas[L_aresta][C_aresta][self.espacoAresta], "--", ajusteEspacoHorizontal, end="")
             else:
                 print("--", str(self.grafo.arestas[L_aresta][C_aresta][self.espacoAresta - 3]) + "," + str(
                     self.grafo.arestas[L_aresta][C_aresta][self.espacoAresta - 2]), "--", ajusteEspacoHorizontal,
