@@ -149,7 +149,7 @@ class Entregador:
             print("Tipo de Caminho:  Tempo")
             print("Custo TOTAL caminho:", self.custoTotalDaRota, " minutos")
         else:
-            print("Tipo de Caminho:  Distância/Tempo")
+            print("Tipo de Caminho:  Tempo/distancia")
             print("Custo TOTAL caminho:", self.custoTotalDaRota, " metros/min")
     
         print("Percurto total:", self.percursoTotal)

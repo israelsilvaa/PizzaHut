@@ -95,7 +95,7 @@ if __name__ == "__main__":
             julinDaCg160 = Entregador(grafo, grid, tela)
             julinDaCg160.iniciarEntregas()
 
-            print("[0]-Sair",Icone.N_ENTREGUE.value, "     [1]-Repet",Icone.REPETIR.value, "     [2]-Config",Icone.CONFIG.value+" Repet"+Icone.REPETIR.value , ":")
+            print("[0]-Sair",Icone.N_ENTREGUE.value, "     [1]-Repet",Icone.REPETIR.value, "     [2]-Config",Icone.CONFIG.value+" e Repet"+Icone.REPETIR.value , ":")
             opc = int(input("\nOpção:"))
             if opc == 0:
                 opc = 10
