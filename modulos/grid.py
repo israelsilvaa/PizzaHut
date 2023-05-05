@@ -160,6 +160,6 @@ class Grid:
         if coluna + 1 <= self.tamanhoGrid - 1:
             L_aresta = self.grid[linha][coluna][0]
             C_aresta = self.grid[linha][coluna + 1][0]
-            print(ajusteEspacoHorizontal,"--", str(self.grafo.arestas[L_aresta][C_aresta][self.tipoDeAresta]) + " --", ajusteEspacoHorizontal,end="")
+            print(ajusteEspacoHorizontal,"--", str(self.grafo.arestas[L_aresta][C_aresta][self.tipoDeAresta])," --", ajusteEspacoHorizontal,end="")
                 
     
