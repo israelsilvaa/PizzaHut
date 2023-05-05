@@ -3,34 +3,45 @@ from enums.icone import Icone
 from modulos.grafo import Grafo
 
 class Grid:
-    def __init__(self, grafo: Grafo, tamanhoGrid: int):
+    def __init__(self, grafo: Grafo, tamanhoGrid: int, tipoDeAresta=0, enderecoPizzaHut=None, quantEntregas=1, listaPedidos=[]):
         self.grid = []
         self.grafo = grafo
         
         self.tamanhoGrid: int = tamanhoGrid
-        self.enderecoPizzaHut = random.randint(1, self.grafo.numeroVertices - 1)
+        if enderecoPizzaHut == None:
+            self.enderecoPizzaHut = random.randint(1, self.grafo.numeroVertices - 1)
+        else:
+            self.enderecoPizzaHut = enderecoPizzaHut
+
         self.entregador = self.enderecoPizzaHut
         
-        self.listaDePedidos = []
-        self.quantEntregas = 2
-        self.tipoCaminho = 0
+        if len(listaPedidos) == 0:
+            self.listaDePedidos = []
+            self.criarListapedidosAleatorios = True
+        else:
+            self.listaDePedidos = listaPedidos.copy()
+            self.criarListapedidosAleatorios = False
 
-        self.tipoAresta = 3
+        self.quantEntregas = quantEntregas
+        self.tipoDeAresta = tipoDeAresta
+
+        self.espacoAresta = 3
 
     def gerarGrid(self):
 
         # gerando pedidos aleatorios( != da pizzaria)
         
         # endereço de entregaga aleatorio e 0 == não entregue
-        endereco = [random.randint(0, self.grafo.numeroVertices - 1), 0]
-        for i in range(self.quantEntregas):
-            while True:
-                endereco = random.randint(0, self.grafo.numeroVertices - 1)
-                if endereco in self.listaDePedidos or endereco == self.enderecoPizzaHut:
+        if self.criarListapedidosAleatorios:
+            endereco = [random.randint(0, self.grafo.numeroVertices - 1), 0]
+            for i in range(self.quantEntregas):
+                while True:
                     endereco = random.randint(0, self.grafo.numeroVertices - 1)
-                else:
-                    self.listaDePedidos.append(endereco)
-                    break
+                    if endereco in self.listaDePedidos or endereco == self.enderecoPizzaHut:
+                        endereco = random.randint(0, self.grafo.numeroVertices - 1)
+                    else:
+                        self.listaDePedidos.append(endereco)
+                        break
 
         # Criando matriz do GRID e setando endereços de clientes
         c = 0
@@ -52,11 +63,11 @@ class Grid:
         for linha in range(self.tamanhoGrid):
             for coluna in range(self.tamanhoGrid):
                 if self.grid[linha][coluna][0] == self.enderecoPizzaHut:
-                    self.grid[linha][coluna][1] = 5
+                    self.grid[linha][coluna][1] = 6
 
     def mostrarGrid(self):
       
-        if self.tipoAresta == 3:
+        if self.espacoAresta == 3:
             ajusteEspacoHorizontal = "   "
         else:
             ajusteEspacoHorizontal = "     "
@@ -93,7 +104,7 @@ class Grid:
                     print(Icone.ENTREGADOR.value, ajusteEspacoHorizontal, end="")
                     self._printarArestaHorizontal(linha, coluna)
                 elif 3 == self.grid[linha][coluna][1]:
-                    print(Icone.CLIENTE.value,
+                    print(Icone.PIZZA.value,
                           ajusteEspacoHorizontal, end="")
                     self._printarArestaHorizontal(linha, coluna)
                 elif 4 == self.grid[linha][coluna][1]:
@@ -108,13 +119,14 @@ class Grid:
                     print(Icone.PIZZARIA.value, Icone.ENTREGADOR.value,
                           ajusteEspacoHorizontal, end="")
                     self._printarArestaHorizontal(linha, coluna)
-            
                     """
                     0 == imprimir vertice normalmente
                     1 ==  icone da pizzaria
                     2 ==  Entregador
                     3 == cliente
                     4 == check -> V (entrega feita)
+                    5 == check e entregador
+                    6 == Pizzaria e entregador
                     """
             print("\n")
             self._printarArestaVerticais(linha, coluna)
@@ -136,7 +148,7 @@ class Grid:
                                        random.randint(1, 4), random.randint(5, 9))
 
     def _printarArestaVerticais(self, linha, coluna):
-        if self.tipoAresta == 3:
+        if self.espacoAresta == 3:
             ajusteEspaco = "              "
             ajusteEspacoHorizontal2 = "              "
             ajusteEspacoHorizontal3 = "                "
@@ -146,7 +158,7 @@ class Grid:
 
         if self.grid[linha][coluna][0] + self.tamanhoGrid <= self.grafo.numeroVertices:
             for i in range(self.tamanhoGrid):
-                if self.tipoAresta == 3:
+                if self.espacoAresta == 3:
                     print("|", ajusteEspacoHorizontal3, end="")
                 else:
                     print("|", ajusteEspacoHorizontal2, end="")
@@ -154,29 +166,29 @@ class Grid:
             for coluna in range(self.tamanhoGrid):
                 L_aresta = self.grid[linha][coluna][0]
                 C_aresta = self.grid[linha][coluna][0] + self.tamanhoGrid
-                if self.tipoAresta == 0:
+                if self.espacoAresta == 0:
                     print(self.grafo.arestas[L_aresta][C_aresta]
-                          [self.tipoAresta], ajusteEspaco, end="")
-                elif self.tipoAresta == 1:
+                          [self.espacoAresta], ajusteEspaco, end="")
+                elif self.espacoAresta == 1:
                     print(self.grafo.arestas[L_aresta][C_aresta]
-                          [self.tipoAresta], ajusteEspaco, end="")
-                elif self.tipoAresta == 2:
+                          [self.espacoAresta], ajusteEspaco, end="")
+                elif self.espacoAresta == 2:
                     print(self.grafo.arestas[L_aresta][C_aresta]
-                          [self.tipoAresta], ajusteEspaco, end="")
+                          [self.espacoAresta], ajusteEspaco, end="")
                 else:
-                    print(str(self.grafo.arestas[L_aresta][C_aresta][self.tipoAresta - 3]) + "," + str(
-                        self.grafo.arestas[L_aresta][C_aresta][self.tipoAresta - 2]), ajusteEspacoHorizontal2,
+                    print(str(self.grafo.arestas[L_aresta][C_aresta][self.espacoAresta - 3]) + "," + str(
+                        self.grafo.arestas[L_aresta][C_aresta][self.espacoAresta - 2]), ajusteEspacoHorizontal2,
                         end="")
             print("\n")
             for i in range(self.tamanhoGrid):
-                if self.tipoAresta == 3:
+                if self.espacoAresta == 3:
                     print("|", ajusteEspacoHorizontal3, end="")
                 else:
                     print("|", ajusteEspacoHorizontal2, end="")
             print("\n")
 
     def _printarArestaHorizontal(self, linha, coluna):
-        if self.tipoAresta == 3:
+        if self.espacoAresta == 3:
             ajusteEspacoHorizontal = "  "
         else:
             ajusteEspacoHorizontal = "     "
@@ -185,18 +197,15 @@ class Grid:
             L_aresta = self.grid[linha][coluna][0]
             C_aresta = self.grid[linha][coluna + 1][0]
 
-            if self.tipoAresta == 0:
-                print("--", self.grafo.arestas[L_aresta][C_aresta]
-                        [self.tipoAresta], "--", ajusteEspacoHorizontal, end="")
-            elif self.tipoAresta == 1:
-                print("--", self.grafo.arestas[L_aresta][C_aresta]
-                        [self.tipoAresta], "--", ajusteEspacoHorizontal, end="")
-            elif self.tipoAresta == 2:
-                print("--", self.grafo.arestas[L_aresta][C_aresta]
-                        [self.tipoAresta], "--", ajusteEspacoHorizontal, end="")
+            if self.espacoAresta == 0:
+                print("--", self.grafo.arestas[L_aresta][C_aresta][self.espacoAresta], "--", ajusteEspacoHorizontal, end="")
+            elif self.espacoAresta == 1:
+                print("--", self.grafo.arestas[L_aresta][C_aresta][self.espacoAresta], "--", ajusteEspacoHorizontal, end="")
+            elif self.espacoAresta == 2:
+                print("--", self.grafo.arestas[L_aresta][C_aresta][self.espacoAresta], "--", ajusteEspacoHorizontal, end="")
             else:
-                print("--", str(self.grafo.arestas[L_aresta][C_aresta][self.tipoAresta - 3]) + "," + str(
-                    self.grafo.arestas[L_aresta][C_aresta][self.tipoAresta - 2]), "--", ajusteEspacoHorizontal,
+                print("--", str(self.grafo.arestas[L_aresta][C_aresta][self.espacoAresta - 3]) + "," + str(
+                    self.grafo.arestas[L_aresta][C_aresta][self.espacoAresta - 2]), "--", ajusteEspacoHorizontal,
                     end="")
                 
     
