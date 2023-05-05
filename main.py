@@ -85,6 +85,14 @@ if __name__ == "__main__":
             gridPreview.gerarArestasGrid()
             gridPreview.mostrarGrid()
             tamanhoGrid = int(input("\nTamanho do grid NxN:"))
+            while True:
+                valor = random.randint(1, tamanhoGrid*tamanhoGrid - 1)
+                if valor in listaPedidos:
+                    valor = random.randint(1, tamanhoGrid*tamanhoGrid - 1)
+                else:
+                    enderecoPizzaHut = valor
+                    break
+
         elif opc == 0:        
             tela.velociadeAtualizacao = velociadeAtualizacao
 
