@@ -13,7 +13,7 @@ if __name__ == "__main__":
     tipoCaminho = 0
     enderecoPizzaHut = random.randint(1, tamanhoGrid*tamanhoGrid - 1)
     quantidateEntregas = 1
-    velociadeAtualizacao = 0.2
+    velociadeAtualizacao = 2
     listaPedidos = []
 
     grafoPreview = Grafo(tamanhoGrid)
