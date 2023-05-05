@@ -1,4 +1,5 @@
 import random
+import time
 from enums.icone import Icone
 from modulos.grafo import Grafo
 
@@ -24,8 +25,6 @@ class Grid:
 
         self.quantEntregas = quantEntregas
         self.tipoDeAresta = tipoDeAresta
-
-        self.espacoAresta = 3
 
     def gerarGrid(self):
 
@@ -66,58 +65,45 @@ class Grid:
                     self.grid[linha][coluna][1] = 6
 
     def mostrarGrid(self):
-      
-        if self.espacoAresta == 3:
-            ajusteEspacoHorizontal = "   "
-        else:
-            ajusteEspacoHorizontal = "     "
-
         for linha in range(0, self.tamanhoGrid):
             for coluna in range(0, self.tamanhoGrid):
 
                 if 0 == self.grid[linha][coluna][1]:
                     if self.grafo.numeroVertices > 99 and self.grid[linha][coluna][0] < 10:
                         print(
-                            "00" + f"{self.grid[linha][coluna][0]} ", ajusteEspacoHorizontal, end="")
+                            "00" + f"{self.grid[linha][coluna][0]} ", end="")
                         self._printarArestaHorizontal(linha, coluna)
                     elif self.grafo.numeroVertices > 9 and self.grid[linha][coluna][0] < 10:
                         print(
                             Icone.COR_VERMELHO.value + "0" +
-                            f"{self.grid[linha][coluna][0]}" + Icone.FIM_COR.value,
-                            ajusteEspacoHorizontal, end="")
+                            f"{self.grid[linha][coluna][0]}" + Icone.FIM_COR.value, end="")
                         
                         self._printarArestaHorizontal(linha, coluna)
                     elif self.grafo.numeroVertices > 99 and self.grid[linha][coluna][0] < 100:
-                        print("0" + f"{self.grid[linha][coluna][0]} ",
-                            ajusteEspacoHorizontal, end="")
+                        print("0" + f"{self.grid[linha][coluna][0]} ", end="")
                         self._printarArestaHorizontal(linha, coluna)
                     else:
                         print(Icone.COR_VERMELHO.value + f"{self.grid[linha][coluna][0]}"+
-                              Icone.FIM_COR.value, ajusteEspacoHorizontal, end="")
+                              Icone.FIM_COR.value, end="")
                         self._printarArestaHorizontal(linha, coluna)
 
                 elif 1 == self.grid[linha][coluna][1]:
-                    print(Icone.PIZZARIA.value,
-                    ajusteEspacoHorizontal, end="")
+                    print(Icone.PIZZARIA.value, end="")
                     self._printarArestaHorizontal(linha, coluna)
                 elif 2 == self.grid[linha][coluna][1]:
-                    print(Icone.ENTREGADOR.value, ajusteEspacoHorizontal, end="")
+                    print(Icone.ENTREGADOR.value, end="")
                     self._printarArestaHorizontal(linha, coluna)
                 elif 3 == self.grid[linha][coluna][1]:
-                    print(Icone.PIZZA.value,
-                          ajusteEspacoHorizontal, end="")
+                    print(Icone.PIZZA.value, end="")
                     self._printarArestaHorizontal(linha, coluna)
                 elif 4 == self.grid[linha][coluna][1]:
-                    print(Icone.CHECK.value,
-                          ajusteEspacoHorizontal, end="")
+                    print(Icone.CHECK.value, end="")
                     self._printarArestaHorizontal(linha, coluna)
                 elif 5 == self.grid[linha][coluna][1]:
-                    print(Icone.CHECK.value,Icone.ENTREGADOR.value,
-                          ajusteEspacoHorizontal, end="")
+                    print(Icone.CHECK.value,Icone.ENTREGADOR.value, end="")
                     self._printarArestaHorizontal(linha, coluna)
                 elif 6 == self.grid[linha][coluna][1]:
-                    print(Icone.PIZZARIA.value, Icone.ENTREGADOR.value,
-                          ajusteEspacoHorizontal, end="")
+                    print(Icone.PIZZARIA.value, Icone.ENTREGADOR.value, end="")
                     self._printarArestaHorizontal(linha, coluna)
                     """
                     0 == imprimir vertice normalmente
@@ -148,64 +134,32 @@ class Grid:
                                        random.randint(1, 4), random.randint(5, 9))
 
     def _printarArestaVerticais(self, linha, coluna):
-        if self.espacoAresta == 3:
-            ajusteEspaco = "              "
-            ajusteEspacoHorizontal2 = "              "
-            ajusteEspacoHorizontal3 = "                "
-        else:
-            ajusteEspaco = "                    "
-            ajusteEspacoHorizontal2 = "                    "
+        ajusteEspacoHorizontal = "                    "    # entre os   | "           "  | 
 
+        # verifica se vai se é a ultima linha do grid
+        # se não for signica que todo o grid ja foi printado, e não executa
         if self.grid[linha][coluna][0] + self.tamanhoGrid <= self.grafo.numeroVertices:
+
             for i in range(self.tamanhoGrid):
-                if self.espacoAresta == 3:
-                    print("|", ajusteEspacoHorizontal3, end="")
-                else:
-                    print("|", ajusteEspacoHorizontal2, end="")
-            print("\n")
+                print("|", ajusteEspacoHorizontal, end="")
+            print(end="\n")
+
             for coluna in range(self.tamanhoGrid):
                 L_aresta = self.grid[linha][coluna][0]
                 C_aresta = self.grid[linha][coluna][0] + self.tamanhoGrid
-                if self.espacoAresta == 0:
-                    print(self.grafo.arestas[L_aresta][C_aresta]
-                          [self.espacoAresta], ajusteEspaco, end="")
-                elif self.espacoAresta == 1:
-                    print(self.grafo.arestas[L_aresta][C_aresta]
-                          [self.espacoAresta], ajusteEspaco, end="")
-                elif self.espacoAresta == 2:
-                    print(self.grafo.arestas[L_aresta][C_aresta]
-                          [self.espacoAresta], ajusteEspaco, end="")
-                else:
-                    print(str(self.grafo.arestas[L_aresta][C_aresta][self.espacoAresta - 3]) + "," + str(
-                        self.grafo.arestas[L_aresta][C_aresta][self.espacoAresta - 2]), ajusteEspacoHorizontal2,
-                        end="")
-            print("\n")
+                print(self.grafo.arestas[L_aresta][C_aresta][self.tipoDeAresta], ajusteEspacoHorizontal, end="")    
+            print(end="\n")
+
             for i in range(self.tamanhoGrid):
-                if self.espacoAresta == 3:
-                    print("|", ajusteEspacoHorizontal3, end="")
-                else:
-                    print("|", ajusteEspacoHorizontal2, end="")
+                print("|", ajusteEspacoHorizontal, end="")
             print("\n")
 
     def _printarArestaHorizontal(self, linha, coluna):
-        if self.espacoAresta == 3:
-            ajusteEspacoHorizontal = "  "
-        else:
-            ajusteEspacoHorizontal = "     "
+        ajusteEspacoHorizontal = "     "
 
         if coluna + 1 <= self.tamanhoGrid - 1:
             L_aresta = self.grid[linha][coluna][0]
             C_aresta = self.grid[linha][coluna + 1][0]
-
-            if self.espacoAresta == 0:
-                print("--", self.grafo.arestas[L_aresta][C_aresta][self.espacoAresta], "--", ajusteEspacoHorizontal, end="")
-            elif self.espacoAresta == 1:
-                print("--", self.grafo.arestas[L_aresta][C_aresta][self.espacoAresta], "--", ajusteEspacoHorizontal, end="")
-            elif self.espacoAresta == 2:
-                print("--", self.grafo.arestas[L_aresta][C_aresta][self.espacoAresta], "--", ajusteEspacoHorizontal, end="")
-            else:
-                print("--", str(self.grafo.arestas[L_aresta][C_aresta][self.espacoAresta - 3]) + "," + str(
-                    self.grafo.arestas[L_aresta][C_aresta][self.espacoAresta - 2]), "--", ajusteEspacoHorizontal,
-                    end="")
+            print(ajusteEspacoHorizontal,"--", str(self.grafo.arestas[L_aresta][C_aresta][self.tipoDeAresta]) + " --", ajusteEspacoHorizontal,end="")
                 
     

@@ -9,11 +9,11 @@ import time
 if __name__ == "__main__":
     tela = Tela()
         
-    tamanhoGrid = 3
+    tamanhoGrid = 5
     tipoCaminho = 0
     enderecoPizzaHut = random.randint(1, tamanhoGrid*tamanhoGrid - 1)
     quantidateEntregas = 1
-    velociadeAtualizacao = 2
+    velociadeAtualizacao = 0.2
     listaPedidos = []
 
     grafoPreview = Grafo(tamanhoGrid)
@@ -42,6 +42,10 @@ if __name__ == "__main__":
             while NovoPedido != -1:
                 tela.limparTela()
                 tela.painelConfigRapida(tamanhoGrid,tipoCaminho,enderecoPizzaHut,quantidateEntregas,velociadeAtualizacao, listaPedidos)
+                gridPreview = Grid(grafoPreview, tamanhoGrid, tipoCaminho, enderecoPizzaHut, quantidateEntregas, listaPedidos)
+                gridPreview.gerarGrid()
+                gridPreview.gerarArestasGrid()
+                gridPreview.mostrarGrid()
                 print("\n[-1]cancelar   [-2]Remover ultimo:")
                 NovoPedido = int(input("\nAdicionar pedido:"))
                 if NovoPedido >= 0 and not(NovoPedido in listaPedidos) and NovoPedido != enderecoPizzaHut and NovoPedido <= tamanhoGrid * tamanhoGrid - 1:
@@ -70,11 +74,16 @@ if __name__ == "__main__":
         elif opc == 2:
             tela.limparTela()
             tela.painelConfigRapida(tamanhoGrid,tipoCaminho,enderecoPizzaHut,quantidateEntregas,velociadeAtualizacao, listaPedidos)
+            gridPreview.mostrarGrid()
             print("\n[0]Distancia | [1]Tempo | [2]Tempo/Distancia")
             tipoCaminho = int(input("\nTipo de aresta(usada no DFS):"))
         elif opc == 1:
             tela.limparTela()
             tela.painelConfigRapida(tamanhoGrid,tipoCaminho,enderecoPizzaHut,quantidateEntregas,velociadeAtualizacao, listaPedidos)
+            gridPreview = Grid(grafoPreview, tamanhoGrid, tipoCaminho, enderecoPizzaHut, quantidateEntregas, listaPedidos)
+            gridPreview.gerarGrid()
+            gridPreview.gerarArestasGrid()
+            gridPreview.mostrarGrid()
             tamanhoGrid = int(input("\nTamanho do grid NxN:"))
         elif opc == 0:        
             tela.velociadeAtualizacao = velociadeAtualizacao
