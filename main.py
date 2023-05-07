@@ -27,20 +27,24 @@ if __name__ == "__main__":
     # tela.painelConfigRapida(tamanhoGrid,tipoCaminho,enderecoPizzaHut,quantidateEntregas,velociadeAtualizacao, listaPedidos)
     while opc != 10:
         
+        # perguntar qual a proxima opc, 
         if opc != 0:
-            tela.limparTela()
             tela.painelConfigRapida(tamanhoGrid,tipoCaminho,enderecoPizzaHut,quantidateEntregas,velociadeAtualizacao, listaPedidos)
-            
             grafoPreview = Grafo(tamanhoGrid)
             gridPreview = Grid(grafoPreview, tamanhoGrid, tipoCaminho, enderecoPizzaHut, quantidateEntregas, listaPedidos)
             gridPreview.gerarGrid()
             gridPreview.gerarArestasGrid()
             gridPreview.mostrarGrid()
             opc = int(input("\nOpção:"))
-        if opc == 6:
+
+        if opc == 7:
+            tela.sobre()
+            sair = str(input())
+
+        elif opc == 6:
             NovoPedido = 99
             while NovoPedido != -1:
-                tela.limparTela()
+               
                 tela.painelConfigRapida(tamanhoGrid,tipoCaminho,enderecoPizzaHut,quantidateEntregas,velociadeAtualizacao, listaPedidos)
                 gridPreview = Grid(grafoPreview, tamanhoGrid, tipoCaminho, enderecoPizzaHut, quantidateEntregas, listaPedidos)
                 gridPreview.gerarGrid()
@@ -57,28 +61,38 @@ if __name__ == "__main__":
                     if quantidateEntregas == 0:
                         quantidateEntregas = 1
 
-        if opc == 5:
-            tela.limparTela()
+        elif opc == 5:
             tela.painelConfigRapida(tamanhoGrid,tipoCaminho,enderecoPizzaHut,quantidateEntregas,velociadeAtualizacao, listaPedidos)
+            gridPreview = Grid(grafoPreview, tamanhoGrid, tipoCaminho, enderecoPizzaHut, quantidateEntregas, listaPedidos)
+            gridPreview.gerarGrid()
+            gridPreview.gerarArestasGrid()
+            gridPreview.mostrarGrid()
             velociadeAtualizacao = float(input("\nVelocidade da simulação:"))
         elif opc == 4:
-            tela.limparTela()
             tela.painelConfigRapida(tamanhoGrid,tipoCaminho,enderecoPizzaHut,quantidateEntregas,velociadeAtualizacao, listaPedidos)
+            gridPreview = Grid(grafoPreview, tamanhoGrid, tipoCaminho, enderecoPizzaHut, quantidateEntregas, listaPedidos)
+            gridPreview.gerarGrid()
+            gridPreview.gerarArestasGrid()
+            gridPreview.mostrarGrid()
             quantidateEntregas = int(input("\nQuantidade de entregas:"))
         elif opc == 3:
-            tela.limparTela()
             tela.painelConfigRapida(tamanhoGrid,tipoCaminho,enderecoPizzaHut,quantidateEntregas,velociadeAtualizacao, listaPedidos)
+            gridPreview = Grid(grafoPreview, tamanhoGrid, tipoCaminho, enderecoPizzaHut, quantidateEntregas, listaPedidos)
+            gridPreview.gerarGrid()
+            gridPreview.gerarArestasGrid()
+            gridPreview.mostrarGrid()
             novoPontoPartida = int(input("\nPizzaria:"))
             if not(novoPontoPartida in listaPedidos):
                 enderecoPizzaHut = novoPontoPartida
         elif opc == 2:
-            tela.limparTela()
             tela.painelConfigRapida(tamanhoGrid,tipoCaminho,enderecoPizzaHut,quantidateEntregas,velociadeAtualizacao, listaPedidos)
+            gridPreview = Grid(grafoPreview, tamanhoGrid, tipoCaminho, enderecoPizzaHut, quantidateEntregas, listaPedidos)
+            gridPreview.gerarGrid()
+            gridPreview.gerarArestasGrid()
             gridPreview.mostrarGrid()
             print("\n[0]Distancia | [1]Tempo | [2]Tempo/Distancia")
             tipoCaminho = int(input("\nTipo de aresta(usada no DFS):"))
         elif opc == 1:
-            tela.limparTela()
             tela.painelConfigRapida(tamanhoGrid,tipoCaminho,enderecoPizzaHut,quantidateEntregas,velociadeAtualizacao, listaPedidos)
             gridPreview = Grid(grafoPreview, tamanhoGrid, tipoCaminho, enderecoPizzaHut, quantidateEntregas, listaPedidos)
             gridPreview.gerarGrid()
@@ -113,7 +127,8 @@ if __name__ == "__main__":
                 opc = 99
 
     tela.limparTela()
-    print("       Obrigado por usar nosso simulador <3")
+    print("\n\n\n\n\n\n                  ", Icone.LOLOGPIZZAHUT.value)
+    print("       Obrigado por usar nosso simulador <3\n\n\n\n\n\n")
     time.sleep(3)
 
 

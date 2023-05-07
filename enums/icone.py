@@ -11,9 +11,10 @@ class Icone(Enum):
     N_ENTREGUE = "\U0000274C"
     
     TEMPO = "\U0000231B"
-    RELOGIO = "\U000023F0"
     REPETIR = "\U0001F501"
     CONFIG = "\U00002699"
+    EXCLAMACAO = "\U00002757"
+    DADO = "\U0001F3B2"
 
     # Cores
     COR_VERMELHO = "\033[31m" #VERMELHO
