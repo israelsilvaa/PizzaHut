@@ -9,7 +9,7 @@ import time
 if __name__ == "__main__":
     tela = Tela()
         
-    tamanhoGrid = 5
+    tamanhoGrid = 3
     tipoCaminho = 0
     enderecoPizzaHut = random.randint(1, tamanhoGrid*tamanhoGrid - 1)
     quantidateEntregas = 1
@@ -35,6 +35,7 @@ if __name__ == "__main__":
             gridPreview.gerarGrid()
             gridPreview.gerarArestasGrid()
             gridPreview.mostrarGrid()
+            grafoPreview.getMatrizAdjacencias()
             opc = int(input("\nOpção:"))
 
         if opc == 7:

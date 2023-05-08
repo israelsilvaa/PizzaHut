@@ -121,17 +121,17 @@ class Grid:
         for linha in range(0, self.tamanhoGrid - 1):
             for coluna in range(0, self.tamanhoGrid - 1):
                 self.grafo.adicionarAresta(self.grid[linha][coluna][0], self.grid[linha + 1]
-                                           [coluna][0], random.randint(1, 4), random.randint(5, 9))
+                                           [coluna][0], random.randint(1, 9), random.randint(1, 9))
                 self.grafo.adicionarAresta(self.grid[linha][coluna][0], self.grid[linha]
-                                           [coluna + 1][0], random.randint(1, 4), random.randint(5, 9))
+                                           [coluna + 1][0], random.randint(1, 9), random.randint(1, 9))
 
         for vertice in range(0, self.tamanhoGrid - 1):
             self.grafo.adicionarAresta(self.grid[-1][vertice][0],
                                        self.grid[-1][vertice + 1][0],
-                                       random.randint(1, 4), random.randint(5, 9))
+                                       random.randint(1, 9), random.randint(1, 9))
             self.grafo.adicionarAresta(self.grid[vertice][-1][0],
                                        self.grid[vertice + 1][-1][0],
-                                       random.randint(1, 4), random.randint(5, 9))
+                                       random.randint(1, 9), random.randint(1, 9))
 
     def _printarArestaVerticais(self, linha, coluna):
         ajusteEspacoHorizontal = "                    "    # entre os   | "           "  | 
