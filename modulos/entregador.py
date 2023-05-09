@@ -22,17 +22,17 @@ class Entregador:
         self.cloneListaDeEntregas()
         self.dijkstra(self.grid.enderecoPizzaHut)
         caminhoCusto = self.pegarMenorCaminhoDaTabela()
-        self.custoTotalDaRota = self.custoTotalDaRota + caminhoCusto[1]
+        self.custoTotalDaRota = round(self.custoTotalDaRota + caminhoCusto[1], 1)
         self.percursoTotal.append(caminhoCusto[0])
-        self.custosPercursoTotal.append(caminhoCusto[1])
+        self.custosPercursoTotal.append(round(caminhoCusto[1], 1))
         self.moverEntregador(caminhoCusto[0])
         
         while(self.pegarEnderecoMaisPerto() != None):
             self.dijkstra(self.grid.entregador)
             caminhoCusto = self.pegarMenorCaminhoDaTabela()
-            self.custoTotalDaRota = self.custoTotalDaRota + caminhoCusto[1]
+            self.custoTotalDaRota = round(self.custoTotalDaRota + caminhoCusto[1], 1)
             self.percursoTotal.append(caminhoCusto[0])
-            self.custosPercursoTotal.append(caminhoCusto[1])
+            self.custosPercursoTotal.append(round(caminhoCusto[1], 1))
             self.moverEntregador(caminhoCusto[0])
 
         self.tela.limparTela()
