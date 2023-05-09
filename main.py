@@ -35,7 +35,7 @@ if __name__ == "__main__":
             gridPreview.gerarGrid()
             gridPreview.gerarArestasGrid()
             gridPreview.mostrarGrid()
-            grafoPreview.getMatrizAdjacencias()
+            # grafoPreview.getMatrizAdjacencias()
             opc = int(input("\nOpção:"))
 
         if opc == 7:

@@ -134,7 +134,11 @@ class Grid:
                                        random.randint(1, 9), random.randint(1, 9))
 
     def _printarArestaVerticais(self, linha, coluna):
-        ajusteEspacoHorizontal = "                    "    # entre os   | "           "  | 
+        if self.tipoDeAresta == 2:
+            ajusteEspacoHorizontal = "                      "    
+            ajusteEspacoHorizontal2 = "                   "     
+        else:
+            ajusteEspacoHorizontal = "                    "    
 
         # verifica se vai se é a ultima linha do grid
         # se não for signica que todo o grid ja foi printado, e não executa
@@ -147,7 +151,10 @@ class Grid:
             for coluna in range(self.tamanhoGrid):
                 L_aresta = self.grid[linha][coluna][0]
                 C_aresta = self.grid[linha][coluna][0] + self.tamanhoGrid
-                print(self.grafo.arestas[L_aresta][C_aresta][self.tipoDeAresta], ajusteEspacoHorizontal, end="")    
+                if self.tipoDeAresta == 2:
+                    print(self.grafo.arestas[L_aresta][C_aresta][self.tipoDeAresta], ajusteEspacoHorizontal2, end="")    
+                else:
+                    print(self.grafo.arestas[L_aresta][C_aresta][self.tipoDeAresta], ajusteEspacoHorizontal, end="")    
             print(end="\n")
 
             for i in range(self.tamanhoGrid):
