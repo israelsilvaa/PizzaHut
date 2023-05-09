@@ -10,7 +10,7 @@ class Entregador:
         self.grid = grid
         self.tela = tela
         self.custo_pi_finali = []
-        self.melhorCaminhoDFS = []
+        self.melhorCaminhoDijkstra = []
         self.tipoDeAresta = self.grid.tipoDeAresta
         self.listaEntrega_endStatus = []
         self.custoTotalDaRota = 0
@@ -20,7 +20,7 @@ class Entregador:
     def iniciarEntregas(self):
 
         self.cloneListaDeEntregas()
-        self.dfs(self.grid.enderecoPizzaHut)
+        self.dijkstra(self.grid.enderecoPizzaHut)
         caminhoCusto = self.pegarMenorCaminhoDaTabela()
         self.custoTotalDaRota = self.custoTotalDaRota + caminhoCusto[1]
         self.percursoTotal.append(caminhoCusto[0])
@@ -28,7 +28,7 @@ class Entregador:
         self.moverEntregador(caminhoCusto[0])
         
         while(self.pegarEnderecoMaisPerto() != None):
-            self.dfs(self.grid.entregador)
+            self.dijkstra(self.grid.entregador)
             caminhoCusto = self.pegarMenorCaminhoDaTabela()
             self.custoTotalDaRota = self.custoTotalDaRota + caminhoCusto[1]
             self.percursoTotal.append(caminhoCusto[0])
@@ -133,14 +133,14 @@ class Entregador:
         print("\nPizzaria:", Icone.PIZZARIA.value,":", self.grid.enderecoPizzaHut)
         print("Entregador",Icone.ENTREGADOR.value,":", self.grid.entregador)
         if self.pegarEnderecoMaisPerto() != None:
-            print("melhor caminho de             ", Icone.COR_VERDE.value + str(self.melhorCaminhoDFS[0])+Icone.FIM_COR.value,"->   ", end="") 
-            for i in range(len(self.melhorCaminhoDFS)):
-                if self.melhorCaminhoDFS[i] == self.grid.entregador:
-                    print(Icone.COR_AMARELO.value + str(self.melhorCaminhoDFS[i])+Icone.FIM_COR.value, end=" - ")
+            print("melhor caminho de             ", Icone.COR_VERDE.value + str(self.melhorCaminhoDijkstra[0])+Icone.FIM_COR.value,"->   ", end="") 
+            for i in range(len(self.melhorCaminhoDijkstra)):
+                if self.melhorCaminhoDijkstra[i] == self.grid.entregador:
+                    print(Icone.COR_AMARELO.value + str(self.melhorCaminhoDijkstra[i])+Icone.FIM_COR.value, end=" - ")
                 else:
-                    print(Icone.COR_VERMELHO.value + str(self.melhorCaminhoDFS[i])+Icone.FIM_COR.value, end=" - ")
+                    print(Icone.COR_VERMELHO.value + str(self.melhorCaminhoDijkstra[i])+Icone.FIM_COR.value, end=" - ")
     
-            print("   ->",Icone.COR_VERDE.value + str(self.melhorCaminhoDFS[-1])+Icone.FIM_COR.value)
+            print("   ->",Icone.COR_VERDE.value + str(self.melhorCaminhoDijkstra[-1])+Icone.FIM_COR.value)
         print(end="")
         if self.tipoDeAresta == 0:
             print("Tipo de aresta:  Distância")
@@ -174,7 +174,7 @@ class Entregador:
             end_status = [self.grid.listaDePedidos[i], 0]
             self.listaEntrega_endStatus.append(end_status)
 
-    # depois de rodar o DFS pega na tabela o endereço com custo menor de deslocamento
+    # depois de rodar o Dijkstra pega na tabela o endereço com custo menor de deslocamento
     # so retorna endereços que sejam de clientes, se não ouver nemhuma entrega pra ser feita retorna NONE
     def pegarEnderecoMaisPerto(self):
         
@@ -196,26 +196,26 @@ class Entregador:
         else:
             return None
 
-    # ver qual o proximo cliente mais perto na tabela DFS, e com o PI, extrai o caminho ate ele.
+    # ver qual o proximo cliente mais perto na tabela Dijkstra, e com o PI, extrai o caminho ate ele.
     def pegarMenorCaminhoDaTabela(self):
-        self.melhorCaminhoDFS = []
+        self.melhorCaminhoDijkstra = []
         custoTotalDoCaminho = 0
 
         proximo = self.pegarEnderecoMaisPerto()
 
-        self.melhorCaminhoDFS.append(proximo)
+        self.melhorCaminhoDijkstra.append(proximo)
         custoTotalDoCaminho = self.custo_pi_finali[proximo][0]
         while self.custo_pi_finali[proximo][1] != "null":
-            self.melhorCaminhoDFS.append(self.custo_pi_finali[proximo][1])
+            self.melhorCaminhoDijkstra.append(self.custo_pi_finali[proximo][1])
             proximo = self.custo_pi_finali[proximo][1]
         
-        self.melhorCaminhoDFS.reverse()
-        caminho_custo = [self.melhorCaminhoDFS, custoTotalDoCaminho]
+        self.melhorCaminhoDijkstra.reverse()
+        caminho_custo = [self.melhorCaminhoDijkstra, custoTotalDoCaminho]
         return caminho_custo
 
-    # cria a tabela do algoritimo DFS, de acordo com a quantidade de vertices
+    # cria a tabela do algoritimo Dijkstra, de acordo com a quantidade de vertices
     # (seta tudo como null) para custos e PI(vertice anterior)
-    def criaTabelaDFS(self):
+    def criaTabelaDijkstra(self):
         self.custo_pi_finali = []
         for i in range(self.grafo.numeroVertices):
             linha = []
@@ -224,10 +224,10 @@ class Entregador:
             linha.append(0)
             self.custo_pi_finali.append(linha)
 
-    # apenas imprimi na tela a tabela DFS
-    def printTabelaDFS(self):
+    # apenas imprimi na tela a tabela Dijkstra
+    def printTabelaDijkstra(self):
 
-        print("\nDFS-------- -  CUSTO  -  PI  -  Finali. ")
+        print("\nDijkstra-------- -  CUSTO  -  PI  -  Finali. ")
         for i in range(self.grafo.numeroVertices):
 
             # VERTICE X: 
@@ -244,17 +244,17 @@ class Entregador:
                     print(str(self.custo_pi_finali[i][x]) , "       ", end="")
             print("")
 
-    # Roda o alg. DFS partindo de um vertice referencia passado no parametro
-    def dfs(self, vertReferencia):     
+    # Roda o alg. Dijkstra partindo de um vertice referencia passado no parametro
+    def dijkstra(self, vertReferencia):     
 
         # sempre zera variaveis antes de iniciar uma nova rodada 
-        self.melhorCaminhoDFS = []
-        self.criaTabelaDFS()
+        self.melhorCaminhoDijkstra = []
+        self.criaTabelaDijkstra()
 
         for i in range(self.grafo.numeroVertices):
 
             # na 1º rodada estamos considerando ir do vertReferencia para todos os outros
-            # mas depois temos que pegar o menor custo da tabela DFS(roda teste de mesa DFS pra entender) 
+            # mas depois temos que pegar o menor custo da tabela Dijkstra(roda teste de mesa Dijkstra pra entender) 
             if i > 0:
                 vertReferencia = self.buscarMenor(self.custo_pi_finali)
             # ---
@@ -290,7 +290,7 @@ class Entregador:
             
             self.custo_pi_finali[vertReferencia][2] = 1 # finaliza a referencia
 
-    # retorna o vertice com menor custo da tabela DFS(todo iniciam com custo INFINITO)
+    # retorna o vertice com menor custo da tabela Dijkstra(todo iniciam com custo INFINITO)
     def buscarMenor(self, lista):
         # csuto e seu indice
         menor = [None ,None]
