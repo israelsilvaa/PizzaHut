@@ -10,10 +10,10 @@ if __name__ == "__main__":
     tela = Tela()
         
     tamanhoGrid = 3
-    tipoCaminho = 0
+    tipoCaminho = 2
     enderecoPizzaHut = random.randint(1, tamanhoGrid*tamanhoGrid - 1)
     quantidateEntregas = 1
-    velociadeAtualizacao = 0.2
+    velociadeAtualizacao = 0.5
     listaPedidos = []
 
     grafoPreview = Grafo(tamanhoGrid)
@@ -35,7 +35,7 @@ if __name__ == "__main__":
             gridPreview.gerarGrid()
             gridPreview.gerarArestasGrid()
             gridPreview.mostrarGrid()
-            grafoPreview.getMatrizAdjacencias()
+            # grafoPreview.getMatrizAdjacencias()
             opc = int(input("\nOpção:"))
 
         if opc == 7:
@@ -92,7 +92,7 @@ if __name__ == "__main__":
             gridPreview.gerarArestasGrid()
             gridPreview.mostrarGrid()
             print("\n[0]Distancia | [1]Tempo | [2]Tempo/Distancia")
-            tipoCaminho = int(input("\nTipo de aresta(usada no DFS):"))
+            tipoCaminho = int(input("\nTipo de aresta(usada no Dijkstra):"))
         elif opc == 1:
             tela.painelConfigRapida(tamanhoGrid,tipoCaminho,enderecoPizzaHut,quantidateEntregas,velociadeAtualizacao, listaPedidos)
             gridPreview = Grid(grafoPreview, tamanhoGrid, tipoCaminho, enderecoPizzaHut, quantidateEntregas, listaPedidos)

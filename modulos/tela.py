@@ -29,11 +29,11 @@ class Tela():
          print("[3] - Pizzaria(0 a",tamanhoGrid*tamanhoGrid - 1,"):", enderecoPizzaHut)
       
       if tipoCaminho == 0:
-         print("[2] - Aresta(usada no DFS): Distancia")
+         print("[2] - Aresta(usada no Dijkstra): Distancia")
       elif tipoCaminho == 1:
-         print("[2] - Aresta(usada no DFS): Tempo")
+         print("[2] - Aresta(usada no Dijkstra): Tempo")
       elif tipoCaminho == 2:
-         print("[2] - Aresta(usada no DFS): Tempo/distancia")
+         print("[2] - Aresta(usada no Dijkstra): Tempo/distancia")
       
       print("[1] - Grid:", tamanhoGrid, "x", tamanhoGrid)
       print("[0] - concluir e iniciar simulação")
