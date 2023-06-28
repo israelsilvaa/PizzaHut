@@ -15,6 +15,22 @@
       ---OK---
 
 4:  Faça o mesmo para D destinos consecutivos.
+      ---OK---
+    
 
 5:  Realize várias simulações e mostre elas rodando na aplicação
     dando a opção de trocar de parâmetros.
+
+        -Necessário implementação do menu!
+
+        Defalt(disponivel mo menu OPÇÕES):
+        -tamanho grid: 3x3
+        -quantidade de pedidos: 1 aleatorio
+        -endreço Pizzaria: aleatorio
+        -tipo aresta: distância
+        -velocidade da simulação: 5s
+
+        Modos em destaque
+        modo 1: tamanho do grid, quantidade de pedidos
+
+        modo 2: tamanho do grid, endereço Pizzaria, endereço do pedido(pode ser N pedidos)

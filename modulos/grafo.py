@@ -3,12 +3,11 @@ class Grafo:
 
     def __init__(self, tamanhoDoGrid):
         self.numeroVertices = tamanhoDoGrid * tamanhoDoGrid
-        self.arestas = [[[0, 0, 0] for i in range(self.numeroVertices)]
-                        for j in range(self.numeroVertices)]
+        self.arestas = [[[0, 0, 0] for i in range(self.numeroVertices)]for j in range(self.numeroVertices)]
 
     def adicionarAresta(self, vertice1, vertice2, distancia, tempo):
-        self.arestas[vertice1][vertice2] = [distancia, tempo, round(tempo / distancia)]
-        self.arestas[vertice2][vertice1] = [distancia, tempo, round(tempo / distancia)]
+        self.arestas[vertice1][vertice2] = [distancia, tempo, round((distancia/tempo)/2, 1)]
+        self.arestas[vertice2][vertice1] = [distancia, tempo, round((distancia/tempo)/2, 1)]
 
     def getMatrizAdjacencias(self):
         print('\n                Aresta(Peso, Tempo)')
@@ -27,5 +26,5 @@ class Grafo:
                 if self.arestas[linha][coluna][0] == 0:
                     print(f"{self.arestas[linha][coluna]}  ", end="")
                 else:
-                    print(Icone.INICIO.value +f"{self.arestas[linha][coluna]}  "+ Icone.FIM.value, end="")
+                    print(Icone.COR_VERMELHO.value +f"{self.arestas[linha][coluna]}  "+ Icone.FIM_COR.value, end="")
             print()
