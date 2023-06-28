@@ -91,7 +91,7 @@ if __name__ == "__main__":
             gridPreview.gerarGrid()
             gridPreview.gerarArestasGrid()
             gridPreview.mostrarGrid()
-            print("\n[0]Distancia | [1]Tempo | [2]Tempo/Distancia")
+            print("\n[0]Distancia | [1]Tempo | [2]Tempo/Distancia | [3]Tempo/Distancia")
             tipoCaminho = int(input("\nTipo de aresta(usada no Dijkstra):"))
         elif opc == 1:
             tela.painelConfigRapida(tamanhoGrid,tipoCaminho,enderecoPizzaHut,quantidateEntregas,velociadeAtualizacao, listaPedidos)

@@ -39,6 +39,84 @@ class Entregador:
         self.painel()
         self.grid.mostrarGrid()
 
+   # faz um clone da lista de endereços de entrega do grid, mas adiciona informação de (entregue ou não)
+    def cloneListaDeEntregas(self):
+        for i in range(len(self.grid.listaDePedidos)):
+            end_status = [self.grid.listaDePedidos[i], 0]
+            self.listaEntrega_endStatus.append(end_status)
+
+   # Roda o alg. Dijkstra partindo de um vertice referencia passado no parametro
+    def dijkstra(self, vertReferencia):     
+
+        # sempre zera variaveis antes de iniciar uma nova rodada 
+        self.melhorCaminhoDijkstra = []
+        self.criaTabelaDijkstra()
+
+        for i in range(self.grafo.numeroVertices):
+
+            # na 1º rodada estamos considerando ir do vertReferencia para todos os outros
+            # mas depois temos que pegar o menor custo da tabela Dijkstra(roda teste de mesa Dijkstra pra entender) 
+            if i > 0:
+                vertReferencia = self.buscarMenor(self.custo_pi_finali)
+            # ---
+
+            for destino in range(self.grafo.numeroVertices):    
+
+                # primeira rodada onde o vertReferencia é o ponto de partida(custo é 0 e anterior é Null)
+                if i == 0 and destino == vertReferencia:
+                        self.custo_pi_finali[destino][0] = 0
+
+                # SE (aresta de referencia p/ Destino for valida) E (destino ainda não visitado)
+                elif self.grafo.arestas[vertReferencia][destino][self.tipoDeAresta] > 0 and self.custo_pi_finali[destino][2] == 0:
+
+                    # se o custo para um vertice for INfinito então coloca o primeiro valor que encontrar
+                    if self.custo_pi_finali[destino][0] == "null":
+
+                        # tratamanto para primeira rodada quando, EVITA soma da proxima aresta com custo atual
+                        # quando custo atual vale string NULL (da erro se somar INT + STR) 
+                        if i == 0:
+                            self.custo_pi_finali[destino][0] = self.grafo.arestas[vertReferencia][destino][self.tipoDeAresta]
+                            self.custo_pi_finali[destino][1] = vertReferencia
+                        else:
+                            #                                               (INTEIRO)                                      +    (INTEIRO)-> na primeira rodada isso pode ser uma string "null"
+                            self.custo_pi_finali[destino][0] = self.grafo.arestas[vertReferencia][destino][self.tipoDeAresta] + self.custo_pi_finali[vertReferencia][0]
+                            self.custo_pi_finali[destino][1] = vertReferencia
+
+                    else:
+                        #SE o vertice de destino ja tiver um valor, nos somamos a aresta q vai pra ele mais o custo do Vertice que o descubriu
+                        # se for menor então temos um caminho melhor e subistituimos.
+                        if self.grafo.arestas[vertReferencia][destino][self.tipoDeAresta] + self.custo_pi_finali[vertReferencia][0] < self.custo_pi_finali[destino][0]:
+                            self.custo_pi_finali[destino][0] = self.grafo.arestas[vertReferencia][destino][self.tipoDeAresta] + self.custo_pi_finali[vertReferencia][0]
+                            self.custo_pi_finali[destino][1] = vertReferencia
+            
+            self.custo_pi_finali[vertReferencia][2] = 1 # finaliza a referencia
+
+     # retorna o vertice com menor custo da tabela Dijkstra(todo iniciam com custo INFINITO)
+    def buscarMenor(self, lista):
+        # csuto e seu indice
+        menor = [None ,None]
+        primeiroValorMenor = 0
+
+        # pega o menor valor da lista(valores com custo != INFINITO(null))
+        for i in range(len(lista)):
+            if lista[i][0] != "null" and lista[i][2] != 1 and primeiroValorMenor == 0:
+                menor[0] = lista[i][0]
+                menor[1] = i
+                primeiroValorMenor = 1
+                
+        # dentre os valores menores que INFINITO(null) e não visitados, retorna o menor deles e seu Vertice
+        for i in range(len(lista)):
+            if lista[i][0] != "null" and lista[i][2] != 1:
+                if lista[i][0] < menor[0]:
+
+                    # no caso ele pega [Custo, vertice]
+                    # pego o custo para debug(pode ser removido, como essa função ja esta funcionando)
+                    menor[0] = lista[i][0]
+                    menor[1] = i
+
+        # mas retorno somento o vertice
+        return menor[1]
+     
     #Procura na lista de endereços do entregador e marca o Pedido X como entregue(0 -> 1)
     def finalizaEndereco(self, endereco):
         for i in range(len(self.listaEntrega_endStatus)):
@@ -157,8 +235,6 @@ class Entregador:
         print("Velocidade de atualização:", self.tela.velociadeAtualizacao)
         print("\nGrid: ", self.grid.tamanhoGrid,"x", self.grid.tamanhoGrid)
        
-        
-
     # verifica se o pedido do endereço X ja foi entregue
     def verificaStatusEntrega(self, enderecoCliente):
         for i in range(len(self.listaEntrega_endStatus)):
@@ -168,12 +244,7 @@ class Entregador:
                 else:
                     return False
     
-    # faz um clone da lista de endereços de entrega do grid, mas adiciona informação de (entregue ou não)
-    def cloneListaDeEntregas(self):
-        for i in range(len(self.grid.listaDePedidos)):
-            end_status = [self.grid.listaDePedidos[i], 0]
-            self.listaEntrega_endStatus.append(end_status)
-
+ 
     # depois de rodar o Dijkstra pega na tabela o endereço com custo menor de deslocamento
     # so retorna endereços que sejam de clientes, se não ouver nemhuma entrega pra ser feita retorna NONE
     def pegarEnderecoMaisPerto(self):
@@ -244,76 +315,6 @@ class Entregador:
                     print(str(self.custo_pi_finali[i][x]) , "       ", end="")
             print("")
 
-    # Roda o alg. Dijkstra partindo de um vertice referencia passado no parametro
-    def dijkstra(self, vertReferencia):     
-
-        # sempre zera variaveis antes de iniciar uma nova rodada 
-        self.melhorCaminhoDijkstra = []
-        self.criaTabelaDijkstra()
-
-        for i in range(self.grafo.numeroVertices):
-
-            # na 1º rodada estamos considerando ir do vertReferencia para todos os outros
-            # mas depois temos que pegar o menor custo da tabela Dijkstra(roda teste de mesa Dijkstra pra entender) 
-            if i > 0:
-                vertReferencia = self.buscarMenor(self.custo_pi_finali)
-            # ---
-
-            for destino in range(self.grafo.numeroVertices):    
-
-                # primeira rodada onde o vertReferencia é o ponto de partida(custo é 0 e anterior é Null)
-                if i == 0 and destino == vertReferencia:
-                        self.custo_pi_finali[destino][0] = 0
-
-                # SE (aresta de referencia p/ Destino for valida) E (destino ainda não visitado)
-                elif self.grafo.arestas[vertReferencia][destino][self.tipoDeAresta] > 0 and self.custo_pi_finali[destino][2] == 0:
-
-                    # se o custo para um vertice for INfinito então coloca o primeiro valor que encontrar
-                    if self.custo_pi_finali[destino][0] == "null":
-
-                        # tratamanto para primeira rodada quando, EVITA soma da proxima aresta com custo atual
-                        # quando custo atual vale string NULL (da erro se somar INT + STR) 
-                        if i == 0:
-                            self.custo_pi_finali[destino][0] = self.grafo.arestas[vertReferencia][destino][self.tipoDeAresta]
-                            self.custo_pi_finali[destino][1] = vertReferencia
-                        else:
-                            #                                               (INTEIRO)                                      +    (INTEIRO)-> na primeira rodada isso pode ser uma string "null"
-                            self.custo_pi_finali[destino][0] = self.grafo.arestas[vertReferencia][destino][self.tipoDeAresta] + self.custo_pi_finali[vertReferencia][0]
-                            self.custo_pi_finali[destino][1] = vertReferencia
-
-                    else:
-                        #SE o vertice de destino ja tiver um valor, nos somamos a aresta q vai pra ele mais o custo do Vertice que o descubriu
-                        # se for menor então temos um caminho melhor e subistituimos.
-                        if self.grafo.arestas[vertReferencia][destino][self.tipoDeAresta] + self.custo_pi_finali[vertReferencia][0] < self.custo_pi_finali[destino][0]:
-                            self.custo_pi_finali[destino][0] = self.grafo.arestas[vertReferencia][destino][self.tipoDeAresta] + self.custo_pi_finali[vertReferencia][0]
-                            self.custo_pi_finali[destino][1] = vertReferencia
-            
-            self.custo_pi_finali[vertReferencia][2] = 1 # finaliza a referencia
-
-    # retorna o vertice com menor custo da tabela Dijkstra(todo iniciam com custo INFINITO)
-    def buscarMenor(self, lista):
-        # csuto e seu indice
-        menor = [None ,None]
-        primeiroValorMenor = 0
-
-        # pega o menor valor da lista(valores com custo != INFINITO(null))
-        for i in range(len(lista)):
-            if lista[i][0] != "null" and lista[i][2] != 1 and primeiroValorMenor == 0:
-                menor[0] = lista[i][0]
-                menor[1] = i
-                primeiroValorMenor = 1
-                
-        # dentre os valores menores que INFINITO(null) e não visitados, retorna o menor deles e seu Vertice
-        for i in range(len(lista)):
-            if lista[i][0] != "null" and lista[i][2] != 1:
-                if lista[i][0] < menor[0]:
-
-                    # no caso ele pega [Custo, vertice]
-                    # pego o custo para debug(pode ser removido, como essa função ja esta funcionando)
-                    menor[0] = lista[i][0]
-                    menor[1] = i
-
-        # mas retorno somento o vertice
-        return menor[1]
-        
+ 
+      
    
