@@ -169,4 +169,3 @@ class Grid:
             C_aresta = self.grid[linha][coluna + 1][0]
             print(ajusteEspacoHorizontal,"--", str(self.grafo.arestas[L_aresta][C_aresta][self.tipoDeAresta])," --", ajusteEspacoHorizontal,end="")
                 
-    
