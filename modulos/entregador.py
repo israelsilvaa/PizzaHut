@@ -16,6 +16,10 @@ class Entregador:
         self.custoTotalDaRota = 0
         self.percursoTotal = []
         self.custosPercursoTotal = []
+        
+        self.distanciaMelhorDeTres = 0
+        self.tempoMelhorDeTres = 0
+        self.mediaMelhorDeTres = 0
 
     def iniciarEntregas(self):
 
@@ -38,6 +42,7 @@ class Entregador:
         self.tela.limparTela()
         self.painel()
         self.grid.mostrarGrid()
+        self.pegarDistanciaTempo()
 
    # faz um clone da lista de endereços de entrega do grid, mas adiciona informação de (entregue ou não)
     def cloneListaDeEntregas(self):
@@ -297,7 +302,6 @@ class Entregador:
 
     # apenas imprimi na tela a tabela Dijkstra
     def printTabelaDijkstra(self):
-
         print("\nDijkstra-------- -  CUSTO  -  PI  -  Finali. ")
         for i in range(self.grafo.numeroVertices):
 
@@ -315,6 +319,12 @@ class Entregador:
                     print(str(self.custo_pi_finali[i][x]) , "       ", end="")
             print("")
 
- 
-      
+    def pegarDistanciaTempo(self):
+        for i in range(len(self.percursoTotal)):
+            for x in range(len(self.percursoTotal[i])):
+                if x+1 < len(self.percursoTotal[i]):
+                    self.distanciaMelhorDeTres += (self.grafo.arestas[self.percursoTotal[i][x]][self.percursoTotal[i][x+1]][0])
+                    self.tempoMelhorDeTres += (self.grafo.arestas[self.percursoTotal[i][x]][self.percursoTotal[i][x+1]][1])
+                    self.mediaMelhorDeTres += (self.grafo.arestas[self.percursoTotal[i][x]][self.percursoTotal[i][x+1]][2])
+
    

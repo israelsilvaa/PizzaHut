@@ -10,11 +10,12 @@ if __name__ == "__main__":
     tela = Tela()
         
     tamanhoGrid = 3
-    tipoCaminho = 2
+    tipoCaminho = 0
     enderecoPizzaHut = random.randint(1, tamanhoGrid*tamanhoGrid - 1)
     quantidateEntregas = 1
-    velociadeAtualizacao = 0.5
+    velociadeAtualizacao = 0.1
     listaPedidos = []
+    compararCaminhos = False
 
     grafoPreview = Grafo(tamanhoGrid)
     gridPreview = Grid(grafoPreview, tamanhoGrid, tipoCaminho, enderecoPizzaHut, quantidateEntregas, listaPedidos)
@@ -91,8 +92,11 @@ if __name__ == "__main__":
             gridPreview.gerarGrid()
             gridPreview.gerarArestasGrid()
             gridPreview.mostrarGrid()
-            print("\n[0]Distancia | [1]Tempo | [2]Tempo/Distancia | [3]Tempo/Distancia")
+            print("\n[0]Distancia | [1]Tempo | [2]Tempo/Distancia | [3]melhor de todos")
             tipoCaminho = int(input("\nTipo de aresta(usada no Dijkstra):"))
+            if tipoCaminho == 3:
+                tipoCaminho = 0
+                compararCaminhos = True
         elif opc == 1:
             tela.painelConfigRapida(tamanhoGrid,tipoCaminho,enderecoPizzaHut,quantidateEntregas,velociadeAtualizacao, listaPedidos)
             gridPreview = Grid(grafoPreview, tamanhoGrid, tipoCaminho, enderecoPizzaHut, quantidateEntregas, listaPedidos)
@@ -109,23 +113,80 @@ if __name__ == "__main__":
                     break
 
         elif opc == 0:        
-            tela.velociadeAtualizacao = velociadeAtualizacao
 
-            grafo = Grafo(tamanhoGrid)
-            grid = Grid(grafo, tamanhoGrid, tipoCaminho, enderecoPizzaHut, quantidateEntregas, listaPedidos)
-            grid.gerarGrid()
-            grid.gerarArestasGrid()
-            julinDaCg160 = Entregador(grafo, grid, tela)
-            julinDaCg160.iniciarEntregas()
+            if compararCaminhos: 
+                tela.velociadeAtualizacao = 0.1
+                grafo1 = Grafo(tamanhoGrid)
+                
+                
+                grid1 = Grid(grafo1, tamanhoGrid, tipoCaminho, enderecoPizzaHut, quantidateEntregas, listaPedidos)
+                grid1.gerarGrid()
 
-            print("[0]-Sair",Icone.N_ENTREGUE.value, "     [1]-Repet",Icone.REPETIR.value, "     [2]-Config",Icone.CONFIG.value+" e Repet"+Icone.REPETIR.value , ":")
-            opc = int(input("\nOpção:"))
-            if opc == 0:
-                opc = 10
-            if opc == 1:
-                opc = 0
-            elif opc == 2:
-                opc = 99
+                grid2 = Grid(grafo1, tamanhoGrid, 1, enderecoPizzaHut, quantidateEntregas, grid1.listaDePedidos)
+                grid3 = Grid(grafo1, tamanhoGrid, 2, enderecoPizzaHut, quantidateEntregas, grid1.listaDePedidos)
+                grid2.gerarGrid()
+                grid3.gerarGrid()
+                grid1.gerarArestasGrid()
+                grid2.gerarArestasGrid()
+                grid3.gerarArestasGrid()
+                entregador1 = Entregador(grafo1, grid1, tela)
+                entregador1.iniciarEntregas()
+                
+                entregador2 = Entregador(grafo1, grid2, tela)
+                entregador2.iniciarEntregas()
+                
+                entregador3 = Entregador(grafo1, grid3, tela)
+                entregador3.iniciarEntregas()
+
+                tela.limparTela()
+                entregador1.painel()
+                print("\nAresta tipo: Distancia")
+                print("metros:", entregador1.custoTotalDaRota," Tempo:", entregador1.tempoMelhorDeTres," media:", entregador1.mediaMelhorDeTres)
+                print("Percurso:", entregador1.percursoTotal)
+      
+                print("\nAresta tipo: Tempo")
+                print("DIstancia:", entregador2.distanciaMelhorDeTres," Tempo:", entregador2.custoTotalDaRota," media:", entregador2.mediaMelhorDeTres)
+                print("Percurso:", entregador2.percursoTotal)
+             
+                print("\nAresta tipo: media")
+                print("metros:", entregador3.distanciaMelhorDeTres, " Tempo:", entregador3.tempoMelhorDeTres, " media:", entregador3.mediaMelhorDeTres)
+                print("Percurso:", entregador3.percursoTotal)
+           
+                print('\n')
+                entregador1.grid.mostrarGrid()
+            
+                print("[0]-Sair",Icone.N_ENTREGUE.value, "     [1]-Repet",Icone.REPETIR.value, "     [2]-Config",Icone.CONFIG.value+" e Repet"+Icone.REPETIR.value , ":")
+               
+                opc = int(input("\nOpção:"))
+                if opc == 0:
+                    opc = 10
+                if opc == 1:
+                    opc = 0
+                elif opc == 2:
+                    compararCaminhos = False
+                    opc = 99
+            else:
+                tela.velociadeAtualizacao = velociadeAtualizacao
+
+                grafo1 = Grafo(tamanhoGrid)
+                
+                grid1 = Grid(grafo1, tamanhoGrid, tipoCaminho, enderecoPizzaHut, quantidateEntregas, listaPedidos)
+                grid1.gerarGrid()
+
+                grid1.gerarArestasGrid()
+          
+                entregador1 = Entregador(grafo1, grid1, tela)
+                entregador1.iniciarEntregas()
+              
+                print("[0]-Sair",Icone.N_ENTREGUE.value, "     [1]-Repet",Icone.REPETIR.value, "     [2]-Config",Icone.CONFIG.value+" e Repet"+Icone.REPETIR.value , ":")
+                opc = int(input("\nOpção:"))
+                if opc == 0:
+                    opc = 10
+                if opc == 1:
+                    opc = 0
+                elif opc == 2:
+                    opc = 99
+
 
     tela.limparTela()
     print("\n\n\n\n\n\n                  ", Icone.LOLOGPIZZAHUT.value)
