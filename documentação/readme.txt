@@ -1,35 +1,18 @@
+Configuração de ambiente - Requisitos minimos:
 
-Classes e suas funções
+    1 - ter intalado editor de codigo fonte Visual studio code.
+        link: <https://code.visualstudio.com/download>.
 
-class Tela:
-    - limparTela(self): [OK !!!]
-        limpa a tela com o comando "clear" nativo do terminal so S.O.
-
-class pizza:
-    __init__(): [OK !!!]
-        inicia algumas variavies do objeto, para que quando usar metodos, n tenha necessidade de passar por parametro, so acessamos elas com "self.variavel"
-
-    criarGrid(self): [OK !!!]
-        -gerar um mapa(gird) NxN
-
-    criarArestas(self): [OK !!!]
-        -gera uma matriz com todos as arestas possiveis para o grid NxN, e nas arestas que compoe o grid adiciona pesos e tempo aleatórios
-
-    enderecoPizza(self, x, y): [não feito!!!!!!]
-        -gerar end. da pizzaria no grid
-    
-    criarEndEntrega(self, x,y): [não feito!!!!!!]
-        -selecionar endereços para fazer entrega
-
-class entregador:
-    __init__(): [não feito!!!!!!]
-        inicializa variaves para serem usadas nos metodos
-
-    -calcularRotas(self, endereco1, endereco2, endereco3):[não feito!]
-        melhor caminho entre os 3 endereços
-    
-    -movimentação(self, endereco): [não feito!!!!!!]
-        ir do ponto atual para o endereço X
+    2 - ter instalado python v3.11 ou superior.
+        -id na loja do vs code: <ms-python.python>.
+        -ou link: <https://www.python.org/downloads/>.
 
 
-#https://python.igraph.org/en/stable/
+Como executar o projeto:
+
+    1 - Baixar projeto no github atraz do link: <https://github.com/israelsilvaa/PizzaHut>.
+
+    2 - apos baixar a pasta do projeto, abra a mesma com o VS code
+        clique no arquivo main.py, e depois no canto superior direito
+        clique em "executar arquivo do python".
+        
