@@ -129,6 +129,7 @@ if __name__ == "__main__":
                 grid1.gerarArestasGrid()
                 grid2.gerarArestasGrid()
                 grid3.gerarArestasGrid()
+
                 entregador1 = Entregador(grafo1, grid1, tela)
                 entregador1.iniciarEntregas()
                 
@@ -141,15 +142,15 @@ if __name__ == "__main__":
                 tela.limparTela()
                 entregador1.painel()
                 print("\nAresta tipo: Distancia")
-                print("metros:", entregador1.custoTotalDaRota," Tempo:", entregador1.tempoMelhorDeTres," media:", entregador1.mediaMelhorDeTres)
+                print("Distancia:", entregador1.custoTotalDaRota," Tempo:", entregador1.tempoMelhorDeTres," media:", entregador1.dist_tempoMelhorDeTres)
                 print("Percurso:", entregador1.percursoTotal)
       
                 print("\nAresta tipo: Tempo")
-                print("DIstancia:", entregador2.distanciaMelhorDeTres," Tempo:", entregador2.custoTotalDaRota," media:", entregador2.mediaMelhorDeTres)
+                print("Distancia:", entregador2.distanciaMelhorDeTres," Tempo:", entregador2.custoTotalDaRota," media:", entregador2.dist_tempoMelhorDeTres)
                 print("Percurso:", entregador2.percursoTotal)
              
                 print("\nAresta tipo: media")
-                print("metros:", entregador3.distanciaMelhorDeTres, " Tempo:", entregador3.tempoMelhorDeTres, " media:", entregador3.mediaMelhorDeTres)
+                print("Distancia:", entregador3.distanciaMelhorDeTres, " Tempo:", entregador3.tempoMelhorDeTres, " media:", entregador3.custoTotalDaRota)
                 print("Percurso:", entregador3.percursoTotal)
            
                 print('\n')
