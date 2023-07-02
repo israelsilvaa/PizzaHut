@@ -63,6 +63,8 @@ class Entregador:
         #       pega o custo total de todas as entregas(para desitancia, tempo, dist/temp)
         #out: Tres caminhos ao mesmo tempo
         self.pegarDistanciaTempo()
+        self.removerRepetidos()
+
 
    # faz um clone da lista de endereços de entrega do grid, mas adiciona informação de (entregue ou não)
     def cloneListaDeEntregas(self):
@@ -365,3 +367,11 @@ class Entregador:
                     self.tempoMelhorDeTres += (self.grafo.arestas[self.percursoTotal[i][x]][self.percursoTotal[i][x+1]][1])
                     
                     self.dist_tempoMelhorDeTres += (self.grafo.arestas[self.percursoTotal[i][x]][self.percursoTotal[i][x+1]][2])
+
+    def removerRepetidos(self):
+        for i in range(len(self.percursoTotal)):
+            if i > 0:
+                self.percursoTotal[i].pop(0)
+           
+        
+     

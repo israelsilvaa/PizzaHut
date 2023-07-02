@@ -9,10 +9,10 @@ import time
 if __name__ == "__main__":
     tela = Tela()
         
-    tamanhoGrid = 3
+    tamanhoGrid = 7
     tipoCaminho = 0
     enderecoPizzaHut = random.randint(1, tamanhoGrid*tamanhoGrid - 1)
-    quantidateEntregas = 1
+    quantidateEntregas = 8
     velociadeAtualizacao = 0.1
     listaPedidos = []
     compararCaminhos = False
@@ -115,7 +115,7 @@ if __name__ == "__main__":
         elif opc == 0:        
 
             if compararCaminhos: 
-                tela.velociadeAtualizacao = 0.1
+                tela.velociadeAtualizacao = 0
                 grafo1 = Grafo(tamanhoGrid)
                 
                 
@@ -142,22 +142,22 @@ if __name__ == "__main__":
                 tela.limparTela()
                 entregador1.painel()
                 print("\nAresta tipo: Distancia")
-                print("Distancia:", entregador1.custoTotalDaRota," Tempo:", entregador1.tempoMelhorDeTres," media:", entregador1.dist_tempoMelhorDeTres)
+                print("Distancia:", entregador1.custoTotalDaRota," Tempo:", entregador1.tempoMelhorDeTres," soma:", entregador1.dist_tempoMelhorDeTres)
                 print("Percurso:", entregador1.percursoTotal)
       
                 print("\nAresta tipo: Tempo")
-                print("Distancia:", entregador2.distanciaMelhorDeTres," Tempo:", entregador2.custoTotalDaRota," media:", entregador2.dist_tempoMelhorDeTres)
+                print("Distancia:", entregador2.distanciaMelhorDeTres," Tempo:", entregador2.custoTotalDaRota," soma:", entregador2.dist_tempoMelhorDeTres)
                 print("Percurso:", entregador2.percursoTotal)
              
-                print("\nAresta tipo: media")
-                print("Distancia:", entregador3.distanciaMelhorDeTres, " Tempo:", entregador3.tempoMelhorDeTres, " media:", entregador3.custoTotalDaRota)
+                print("\nAresta tipo: soma")
+                print("Distancia:", entregador3.distanciaMelhorDeTres," Tempo:", entregador3.tempoMelhorDeTres, " soma:", entregador3.custoTotalDaRota)
                 print("Percurso:", entregador3.percursoTotal)
            
                 print('\n')
                 entregador1.grid.mostrarGrid()
             
                 print("[0]-Sair",Icone.N_ENTREGUE.value, "     [1]-Repet",Icone.REPETIR.value, "     [2]-Config",Icone.CONFIG.value+" e Repet"+Icone.REPETIR.value , ":")
-               
+                # grafo1.getMatrizAdjacencias()
                 opc = int(input("\nOpção:"))
                 if opc == 0:
                     opc = 10
