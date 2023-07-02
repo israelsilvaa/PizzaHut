@@ -7,15 +7,18 @@ class Grid:
     def __init__(self, grafo: Grafo, tamanhoGrid: int, tipoDeAresta=0, enderecoPizzaHut=None, quantEntregas=1, listaPedidos=[]):
         self.grid = []
         self.grafo = grafo
-        
         self.tamanhoGrid: int = tamanhoGrid
+        
+        #       ender. pizza vazio == gerar um ALEATORIO
         if enderecoPizzaHut == None:
             self.enderecoPizzaHut = random.randint(1, self.grafo.numeroVertices - 1)
         else:
             self.enderecoPizzaHut = enderecoPizzaHut
 
+        # entregador começa sempre da pizzaria
         self.entregador = self.enderecoPizzaHut
         
+        #       se o usuario não definir os endeços de entreg == gerar ALEATORIOS
         if len(listaPedidos) == 0:
             self.listaDePedidos = []
             self.criarListapedidosAleatorios = True
@@ -28,11 +31,11 @@ class Grid:
 
     def gerarGrid(self):
 
-        # gerando pedidos aleatorios( != da pizzaria)
-        
-        # endereço de entregaga aleatorio e 0 == não entregue
+        # gerando endereços aleatorios( != da pizzaria)
         if self.criarListapedidosAleatorios:
-            endereco = [random.randint(0, self.grafo.numeroVertices - 1), 0]
+
+            #       endereço de entregaga aleatorio e 0 == status não entregue
+            # endereco = [random.randint(0, self.grafo.numeroVertices - 1), 0]
             for i in range(self.quantEntregas):
                 while True:
                     endereco = random.randint(0, self.grafo.numeroVertices - 1)
@@ -48,7 +51,6 @@ class Grid:
             valoresLinha = []
             for coluna in range(0, self.tamanhoGrid):
 
-            
                 if c in self.listaDePedidos:
                     vertice_icone = [c, 3]  # mudar pra 3(icone cliente)
                 else:
@@ -120,18 +122,27 @@ class Grid:
     def gerarArestasGrid(self):
         for linha in range(0, self.tamanhoGrid - 1):
             for coluna in range(0, self.tamanhoGrid - 1):
-                self.grafo.adicionarAresta(self.grid[linha][coluna][0], self.grid[linha + 1]
-                                           [coluna][0], random.randint(1, 9), random.randint(1, 9))
-                self.grafo.adicionarAresta(self.grid[linha][coluna][0], self.grid[linha]
-                                           [coluna + 1][0], random.randint(1, 9), random.randint(1, 9))
-
+                #                          [            0             ][                3             ]
+                #                          [            1             ][                4             ] 
+                #                          [            3             ][                6             ] 
+                #                          [            4             ][                7             ] 
+                self.grafo.adicionarAresta(self.grid[linha][coluna][0], self.grid[linha + 1][coluna][0], random.randint(1, 9), random.randint(1, 9))
+                
+                #                          [            0             ][                1             ] 
+                #                          [            1             ][                2             ] 
+                #                          [            3             ][                4             ] 
+                #                          [            4             ][                5             ] 
+                self.grafo.adicionarAresta(self.grid[linha][coluna][0], self.grid[linha][coluna + 1][0], random.randint(1, 9), random.randint(1, 9))
+                
         for vertice in range(0, self.tamanhoGrid - 1):
-            self.grafo.adicionarAresta(self.grid[-1][vertice][0],
-                                       self.grid[-1][vertice + 1][0],
-                                       random.randint(1, 9), random.randint(1, 9))
-            self.grafo.adicionarAresta(self.grid[vertice][-1][0],
-                                       self.grid[vertice + 1][-1][0],
-                                       random.randint(1, 9), random.randint(1, 9))
+            #                          [            6           ][             7             ] interacao 0
+            #                          [            7           ][             8             ] interacao 1
+            self.grafo.adicionarAresta(self.grid[-1][vertice][0],self.grid[-1][vertice + 1][0],random.randint(1, 9), random.randint(1, 9))
+            
+            #                          [            2           ][             5             ] interacao 0
+            #                          [            5           ][             8             ] interacao 1
+            self.grafo.adicionarAresta(self.grid[vertice][-1][0],self.grid[vertice + 1][-1][0],random.randint(1, 9), random.randint(1, 9))
+            
 
     def _printarArestaVerticais(self, linha, coluna):
         if self.tipoDeAresta == 2:

@@ -65,7 +65,6 @@ class Entregador:
         self.pegarDistanciaTempo()
         self.removerRepetidos()
 
-
    # faz um clone da lista de endereços de entrega do grid, mas adiciona informação de (entregue ou não)
     def cloneListaDeEntregas(self):
         for i in range(len(self.grid.listaDePedidos)):

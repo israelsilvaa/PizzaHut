@@ -8,6 +8,8 @@ class Grafo:
     def adicionarAresta(self, vertice1, vertice2, distancia, tempo):
         # self.arestas[vertice1][vertice2] = [distancia, tempo, round((distancia/tempo)/2, 1)]
         # self.arestas[vertice2][vertice1] = [distancia, tempo, round((distancia/tempo)/2, 1)]
+
+        #       Aresta tipo SOMA
         self.arestas[vertice1][vertice2] = [distancia, tempo, round((distancia+tempo), 1)]
         self.arestas[vertice2][vertice1] = [distancia, tempo, round((distancia+tempo), 1)]
 

@@ -9,10 +9,10 @@ import time
 if __name__ == "__main__":
     tela = Tela()
         
-    tamanhoGrid = 7
+    tamanhoGrid = 3
     tipoCaminho = 0
     enderecoPizzaHut = random.randint(1, tamanhoGrid*tamanhoGrid - 1)
-    quantidateEntregas = 8
+    quantidateEntregas = 3
     velociadeAtualizacao = 0.1
     listaPedidos = []
     compararCaminhos = False
@@ -169,11 +169,16 @@ if __name__ == "__main__":
             else:
                 tela.velociadeAtualizacao = velociadeAtualizacao
 
+                #       define um grafo NxN com aresta iniciadas(zeradas)
                 grafo1 = Grafo(tamanhoGrid)
                 
+                #       Gera ender. Pizzaria - seta variavies de configuração(quant entrega...)
                 grid1 = Grid(grafo1, tamanhoGrid, tipoCaminho, enderecoPizzaHut, quantidateEntregas, listaPedidos)
+                
+                #       gera endere. aleatorios - cria GRID - Seta endreç entrega
                 grid1.gerarGrid()
 
+                #       gera as aresta em forma de GRID
                 grid1.gerarArestasGrid()
           
                 entregador1 = Entregador(grafo1, grid1, tela)
