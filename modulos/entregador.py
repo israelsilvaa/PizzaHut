@@ -59,6 +59,7 @@ class Entregador:
         self.tela.limparTela()
         self.painel()
         self.grid.mostrarGrid()
+        self.printTabelaDijkstra()
 
         #       pega o custo total de todas as entregas(para desitancia, tempo, dist/temp)
         #out: Tres caminhos ao mesmo tempo
@@ -117,8 +118,6 @@ class Entregador:
 
             # finaliza a referencia
             self.custo_pi_finali[vertReferencia][2] = 1
-            # self.printTabelaDijkstra()
-            # s = input("dwebug")
 
     # retorna o vertice com menor custo da tabela Dijkstra(todo iniciam com custo INFINITO)
     def buscarMenor(self, lista):
