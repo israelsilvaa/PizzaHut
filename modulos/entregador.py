@@ -371,5 +371,3 @@ class Entregador:
             if i > 0:
                 self.percursoTotal[i].pop(0)
            
-        
-     

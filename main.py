@@ -169,7 +169,7 @@ if __name__ == "__main__":
             else:
                 tela.velociadeAtualizacao = velociadeAtualizacao
 
-                #       define um grafo NxN com aresta iniciadas(zeradas)
+                #       define a quantidade de vertices do grafo(NxN) com arestas iniciadas(zeradas)
                 grafo1 = Grafo(tamanhoGrid)
                 
                 #       Gera ender. Pizzaria - seta variavies de configuração(quant entrega...)
